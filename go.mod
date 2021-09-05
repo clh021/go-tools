@@ -4,9 +4,11 @@ go 1.16
 
 require (
 	github.com/caddyserver/caddy/v2 v2.4.4
+	github.com/clh021/crud-api v0.0.0-20210904092721-a0b777d462eb
 	github.com/filebrowser/filebrowser/v2 v2.17.2
 	github.com/gin-gonic/gin v1.7.4
 	github.com/go-playground/validator/v10 v10.9.0 // indirect
+	github.com/jfeliu007/goplantuml v1.5.2
 	github.com/klauspost/cpuid v1.3.1 // indirect
 	github.com/linakesi/lnksutils v0.0.0-20210706050630-1e08647cda1e
 	github.com/stretchr/testify v1.7.0
