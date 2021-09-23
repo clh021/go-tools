@@ -6,6 +6,7 @@ import (
 	"test/service/caddyModule"
 	"test/service/fileModule"
 	"test/service/ginExample"
+	"test/service/goAdmin"
 	"test/service/plantumlModule"
 
 	"github.com/linakesi/lnksutils"
@@ -22,6 +23,7 @@ func main() {
 	reexec.Register("caddyModule", caddyModule.Main)
 	reexec.Register("fileModule", fileModule.Main)
 	reexec.Register("plantumlModule", plantumlModule.Main)
+	reexec.Register("goAdmin", goAdmin.Main)
 	lnksutils.IsFileExist("index.html")
 	cmd := os.Getenv("NANOAPP_CMD")
 	os.Unsetenv("NANOAPP_CMD")
