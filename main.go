@@ -31,8 +31,8 @@ func main() {
 	reexec.Register("websocketGo", websocketGo.Main)
 	reexec.Register("raccoon", raccoon.Main)
 	lnksutils.IsFileExist("index.html")
-	cmd := os.Getenv("NANOAPP_CMD")
-	os.Unsetenv("NANOAPP_CMD")
+	cmd := os.Getenv("APPINTO")
+	os.Unsetenv("APPINTO")
 	if reexec.Init(cmd) {
 		return
 	}
