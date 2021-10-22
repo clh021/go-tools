@@ -9,16 +9,13 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-var addr = flag.String("addr", "0.0.0.0:8080", "http service address")
-
-var upgrader = websocket.Upgrader{
-	// 解决跨域问题
-	CheckOrigin: func(r *http.Request) bool {
-		return true
-	},
-} // use default options
-
 func ws(w http.ResponseWriter, r *http.Request) {
+	upgrader := websocket.Upgrader{
+		// 解决跨域问题
+		CheckOrigin: func(r *http.Request) bool {
+			return true
+		},
+	} // use default options
 	c, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		log.Print("upgrade:", err)
@@ -41,6 +38,7 @@ func ws(w http.ResponseWriter, r *http.Request) {
 }
 
 func Main() {
+	addr := flag.String("addr", "0.0.0.0:8080", "http service address")
 	flag.Parse()
 	log.SetFlags(0)
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {

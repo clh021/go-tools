@@ -9,15 +9,14 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-var addr = flag.String("addr", "0.0.0.0:8080", "http service address")
-var upgrader = websocket.Upgrader{
-	// 解决跨域问题
-	CheckOrigin: func(r *http.Request) bool {
-		return true
-	},
-} // use default options
-
 func cmdWebSocket(c *gin.Context) {
+	upgrader := websocket.Upgrader{
+		// 解决跨域问题
+		CheckOrigin: func(r *http.Request) bool {
+			return true
+		},
+	} // use default options
+
 	ws, err := upgrader.Upgrade(c.Writer, c.Request, nil)
 	if err != nil {
 		log.Print("upgrade:", err)
@@ -40,6 +39,7 @@ func cmdWebSocket(c *gin.Context) {
 }
 
 func Main() {
+	addr := flag.String("addr", "0.0.0.0:8080", "http service address")
 	r := gin.Default()
 	r.GET("/", func(c *gin.Context) {
 		c.String(http.StatusOK, "Welcome for you!")
