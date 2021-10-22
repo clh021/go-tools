@@ -8,6 +8,8 @@ import (
 	"test/service/ginExample"
 	"test/service/goAdmin"
 	"test/service/plantumlModule"
+	"test/service/websocketGin"
+	"test/service/websocketGo"
 
 	"github.com/linakesi/lnksutils"
 	"github.com/linakesi/lnksutils/reexec"
@@ -24,6 +26,8 @@ func main() {
 	reexec.Register("fileModule", fileModule.Main)
 	reexec.Register("plantumlModule", plantumlModule.Main)
 	reexec.Register("goAdmin", goAdmin.Main)
+	reexec.Register("websocketGin", websocketGin.Main)
+	reexec.Register("websocketGo", websocketGo.Main)
 	lnksutils.IsFileExist("index.html")
 	cmd := os.Getenv("NANOAPP_CMD")
 	os.Unsetenv("NANOAPP_CMD")
