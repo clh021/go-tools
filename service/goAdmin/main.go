@@ -56,7 +56,7 @@ func Main() {
 		Debug:              true,
 		AccessAssetsLogOff: true,
 		Animation: config.PageAnimation{
-			Type: "fadeInUp",
+			Type: "fadeIn",
 		},
 		ColorScheme:       adminlte.ColorschemeSkinBlack,
 		BootstrapFilePath: "./../datamodel/bootstrap.go",

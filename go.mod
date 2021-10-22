@@ -11,6 +11,7 @@ require (
 	github.com/gin-gonic/gin v1.7.4
 	github.com/go-playground/validator/v10 v10.9.0 // indirect
 	github.com/gobuffalo/packr/v2 v2.8.1 // indirect
+	github.com/gorilla/websocket v1.4.2
 	github.com/jfeliu007/goplantuml v1.5.2
 	github.com/klauspost/cpuid v1.3.1 // indirect
 	github.com/linakesi/lnksutils v0.0.0-20210706050630-1e08647cda1e

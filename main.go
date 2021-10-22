@@ -6,7 +6,6 @@ import (
 	"test/service/caddyModule"
 	"test/service/fileModule"
 	"test/service/ginExample"
-	"test/service/goAdmin"
 	"test/service/plantumlModule"
 	"test/service/websocketGin"
 	"test/service/websocketGo"
@@ -25,7 +24,7 @@ func main() {
 	reexec.Register("caddyModule", caddyModule.Main)
 	reexec.Register("fileModule", fileModule.Main)
 	reexec.Register("plantumlModule", plantumlModule.Main)
-	reexec.Register("goAdmin", goAdmin.Main)
+	// reexec.Register("goAdmin", goAdmin.Main)
 	reexec.Register("websocketGin", websocketGin.Main)
 	reexec.Register("websocketGo", websocketGo.Main)
 	lnksutils.IsFileExist("index.html")
