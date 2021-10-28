@@ -24,6 +24,7 @@ func webDistServe() {
 	err := http.ListenAndServe(":8080", nil)
 
 	http.HandleFunc("/hello", func(rw http.ResponseWriter, r *http.Request) {
+		rw.Header().Add("Content-Type", "text/html; charset=utf-8")
 		rw.Write([]byte("hello! Welcome for you!\n"))
 	})
 
@@ -32,6 +33,7 @@ func webDistServe() {
 		if err != nil {
 			log.Println(err)
 		}
+		rw.Header().Add("Content-Type", "text/html; charset=utf-8")
 		rw.Write(homeTpl)
 	})
 
