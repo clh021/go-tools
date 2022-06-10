@@ -1,4 +1,4 @@
-package main
+package grpcGoClient
 
 import (
 	"context"
@@ -6,7 +6,7 @@ import (
 	"log"
 	"time"
 
-	pb "test/service/grpcGo/protos/helloworld"
+	pb "test/service/grpcGo/protos"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -21,7 +21,7 @@ var (
 	name = flag.String("name", defaultName, "Name to greet")
 )
 
-func main() {
+func Main() {
 	flag.Parse()
 	conn, err := grpc.Dial(*addr, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {

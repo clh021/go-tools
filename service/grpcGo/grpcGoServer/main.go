@@ -1,4 +1,4 @@
-package main
+package grpcGoServer
 
 import (
 	"context"
@@ -7,7 +7,7 @@ import (
 	"log"
 	"net"
 
-	pb "test/service/grpcGo/protos/helloworld"
+	pb "test/service/grpcGo/protos"
 
 	"google.golang.org/grpc"
 )
@@ -27,7 +27,7 @@ func (s *server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloRe
 	return &pb.HelloReply{Message: "Hello " + in.GetName()}, nil
 }
 
-func main() {
+func Main() {
 	flag.Parse()
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", *port))
 	if err != nil {
