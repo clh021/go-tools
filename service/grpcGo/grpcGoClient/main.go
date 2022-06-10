@@ -23,6 +23,8 @@ var (
 
 func Main() {
 	flag.Parse()
+
+	// 初始化 grpc 连接
 	conn, err := grpc.Dial(*addr, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
@@ -30,8 +32,11 @@ func Main() {
 	defer conn.Close()
 	c := pb.NewGreeterClient(conn)
 
+	// 建立上下文
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
+
+	// 调用 grpc 接口
 	r, err := c.SayHello(ctx, &pb.HelloRequest{Name: *name})
 	if err != nil {
 		log.Fatalf("could not greet: %v", err)

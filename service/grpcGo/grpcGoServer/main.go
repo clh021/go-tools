@@ -29,13 +29,20 @@ func (s *server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloRe
 
 func Main() {
 	flag.Parse()
+
+	// 创建端口监听服务
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", *port))
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
+
+	// 建立 Grpc 服务
 	s := grpc.NewServer()
+	// 注册一个 grpc 接口
 	pb.RegisterGreeterServer(s, &server{})
 	log.Printf("server listening at %v", lis.Addr())
+
+	// 启动服务
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}
