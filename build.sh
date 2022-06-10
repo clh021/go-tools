@@ -1,4 +1,4 @@
-#！/bin/bash
+#!/bin/bash
 echo "正在准备编译标记版本"
 # gitTime=$(git log -1 --format=%at | xargs -I{} date -d @{} +%Y%m%d_%H%M%S)
 gitTime=$(date +00%y%m%d%H%M%S)
@@ -11,7 +11,7 @@ go generate
 
 
 
-go build -ldflags "-X main.build=${gitTime}.${gitCID}" -o "bin.${gitTime}"
+go build -ldflags "-X main.build=${gitTime}.${gitCID}" -o "bin/app"
 
 
 
