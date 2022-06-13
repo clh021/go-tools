@@ -9,6 +9,7 @@ import (
 	"test/service/goAdmin"
 	"test/service/grpcGo/grpcGoClient"
 	"test/service/grpcGo/grpcGoServer"
+	"test/service/grpcWeb/time/grpcWebClient"
 	"test/service/plantumlModule"
 	"test/service/raccoon"
 	"test/service/websocketGin"
@@ -33,6 +34,7 @@ func main() {
 	reexec.Register("websocketGo", websocketGo.Main)
 	reexec.Register("grpcGoClient", grpcGoClient.Main)
 	reexec.Register("grpcGoServer", grpcGoServer.Main)
+	reexec.Register("grpcWebClient", grpcWebClient.Main)
 	reexec.Register("raccoon", raccoon.Main)
 	lnksutils.IsFileExist("index.html")
 	cmd := os.Getenv("APPINTO")
