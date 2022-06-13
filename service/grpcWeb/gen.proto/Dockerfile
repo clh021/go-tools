@@ -30,14 +30,17 @@ RUN wget https://github.com/protocolbuffers/protobuf/releases/download/v$PROTOBU
 ## Install protoc-gen-go
 
 ENV PROTOC_GEN_GO_VERSION v1.5.2
-
-RUN git clone https://github.com/golang/protobuf /root/go/src/github.com/golang/protobuf && \
-    cd /root/go/src/github.com/golang/protobuf && \
+ENV GOPROXY https://goproxy.cn
+ENV GOROOT /usr/lib/go
+ENV GOPATH /golang/go
+ENV PATH $GOPATH/bin:$PATH
+RUN git clone https://github.com/golang/protobuf /golang/go/src/github.com/golang/protobuf && \
+    cd /golang/go/src/github.com/golang/protobuf && \
     git fetch --all --tags --prune && \
     git checkout tags/$PROTOC_GEN_GO_VERSION && \
     go install ./protoc-gen-go && \
-    ln -s /root/go/bin/protoc-gen-go /usr/local/bin/protoc-gen-go && \
-    rm -rf /root/go/src
+    ln -s /golang/go/bin/protoc-gen-go /usr/local/bin/protoc-gen-go && \
+    rm -rf /golang/go/src
 
 ## Install protoc-gen-grpc-web
 
