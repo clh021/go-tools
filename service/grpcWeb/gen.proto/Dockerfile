@@ -1,4 +1,4 @@
-# docker build -t grpc-web-generators .
+# docker build -t leehom/grpc-web-generators .
 
 FROM ubuntu:latest
 
