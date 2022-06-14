@@ -1,6 +1,7 @@
 package echoing
 
 import (
+	"fmt"
 	"golang.org/x/net/context"
 	"log"
 )
@@ -11,7 +12,7 @@ type Server struct {
 func (s *Server) Echo(ctx context.Context, req *EchoRequest) (*EchoResponse, error) {
 	log.Printf("Received new echo request %s", req)
 	echoObject := &EchoResponse{
-		Message:      "receive:Echo:",
+		Message:      fmt.Sprintf("receive:Echo:%s", " message todo"),
 		MessageCount: 1,
 	}
 	return echoObject, nil
@@ -19,7 +20,7 @@ func (s *Server) Echo(ctx context.Context, req *EchoRequest) (*EchoResponse, err
 
 func (s *Server) EchoAbort(ctx context.Context, req *EchoRequest) (*EchoResponse, error) {
 	return &EchoResponse{
-		Message:      "receive:EchoAbort:",
+		Message:      fmt.Sprintf("receive:EchoAbort:%s", " message todo"),
 		MessageCount: 2,
 	}, nil
 }
