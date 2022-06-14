@@ -3,7 +3,7 @@ docker run --rm \
     --user "$(id -u):$(id -g)" \
     -v "$(pwd)"/echoing:/api \
     -v "$(pwd)"/echoing:/goclient \
-    -v "$(pwd)"/web/src/lib:/jsclient \
+    -v "$(pwd)"/web/lib:/jsclient \
     leehom/grpc-web-generators \
     protoc -I /api \
         --go_out=plugins=grpc,paths=source_relative:/goclient \

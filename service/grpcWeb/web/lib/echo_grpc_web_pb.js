@@ -1,5 +1,5 @@
 /**
- * @fileoverview gRPC-Web generated client stub for grpc.gateway.testing
+ * @fileoverview gRPC-Web generated client stub for testing
  * @enhanceable
  * @public
  */
@@ -16,9 +16,7 @@ const grpc = {};
 grpc.web = require('grpc-web');
 
 const proto = {};
-proto.grpc = {};
-proto.grpc.gateway = {};
-proto.grpc.gateway.testing = require('./echo_pb.js');
+proto.testing = require('./echo_pb.js');
 
 /**
  * @param {string} hostname
@@ -28,7 +26,7 @@ proto.grpc.gateway.testing = require('./echo_pb.js');
  * @struct
  * @final
  */
-proto.grpc.gateway.testing.EchoServiceClient =
+proto.testing.EchoServiceClient =
     function(hostname, credentials, options) {
   if (!options) options = {};
   options.format = 'text';
@@ -54,7 +52,7 @@ proto.grpc.gateway.testing.EchoServiceClient =
  * @struct
  * @final
  */
-proto.grpc.gateway.testing.EchoServicePromiseClient =
+proto.testing.EchoServicePromiseClient =
     function(hostname, credentials, options) {
   if (!options) options = {};
   options.format = 'text';
@@ -75,39 +73,39 @@ proto.grpc.gateway.testing.EchoServicePromiseClient =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
- *   !proto.grpc.gateway.testing.EchoRequest,
- *   !proto.grpc.gateway.testing.EchoResponse>}
+ *   !proto.testing.EchoRequest,
+ *   !proto.testing.EchoResponse>}
  */
 const methodDescriptor_EchoService_Echo = new grpc.web.MethodDescriptor(
-  '/grpc.gateway.testing.EchoService/Echo',
+  '/testing.EchoService/Echo',
   grpc.web.MethodType.UNARY,
-  proto.grpc.gateway.testing.EchoRequest,
-  proto.grpc.gateway.testing.EchoResponse,
+  proto.testing.EchoRequest,
+  proto.testing.EchoResponse,
   /**
-   * @param {!proto.grpc.gateway.testing.EchoRequest} request
+   * @param {!proto.testing.EchoRequest} request
    * @return {!Uint8Array}
    */
   function(request) {
     return request.serializeBinary();
   },
-  proto.grpc.gateway.testing.EchoResponse.deserializeBinary
+  proto.testing.EchoResponse.deserializeBinary
 );
 
 
 /**
- * @param {!proto.grpc.gateway.testing.EchoRequest} request The
+ * @param {!proto.testing.EchoRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.RpcError, ?proto.grpc.gateway.testing.EchoResponse)}
+ * @param {function(?grpc.web.RpcError, ?proto.testing.EchoResponse)}
  *     callback The callback function(error, response)
- * @return {!grpc.web.ClientReadableStream<!proto.grpc.gateway.testing.EchoResponse>|undefined}
+ * @return {!grpc.web.ClientReadableStream<!proto.testing.EchoResponse>|undefined}
  *     The XHR Node Readable Stream
  */
-proto.grpc.gateway.testing.EchoServiceClient.prototype.echo =
+proto.testing.EchoServiceClient.prototype.echo =
     function(request, metadata, callback) {
   return this.client_.rpcCall(this.hostname_ +
-      '/grpc.gateway.testing.EchoService/Echo',
+      '/testing.EchoService/Echo',
       request,
       metadata || {},
       methodDescriptor_EchoService_Echo,
@@ -116,17 +114,17 @@ proto.grpc.gateway.testing.EchoServiceClient.prototype.echo =
 
 
 /**
- * @param {!proto.grpc.gateway.testing.EchoRequest} request The
+ * @param {!proto.testing.EchoRequest} request The
  *     request proto
  * @param {?Object<string, string>=} metadata User defined
  *     call metadata
- * @return {!Promise<!proto.grpc.gateway.testing.EchoResponse>}
+ * @return {!Promise<!proto.testing.EchoResponse>}
  *     Promise that resolves to the response
  */
-proto.grpc.gateway.testing.EchoServicePromiseClient.prototype.echo =
+proto.testing.EchoServicePromiseClient.prototype.echo =
     function(request, metadata) {
   return this.client_.unaryCall(this.hostname_ +
-      '/grpc.gateway.testing.EchoService/Echo',
+      '/testing.EchoService/Echo',
       request,
       metadata || {},
       methodDescriptor_EchoService_Echo);
@@ -136,39 +134,39 @@ proto.grpc.gateway.testing.EchoServicePromiseClient.prototype.echo =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
- *   !proto.grpc.gateway.testing.EchoRequest,
- *   !proto.grpc.gateway.testing.EchoResponse>}
+ *   !proto.testing.EchoRequest,
+ *   !proto.testing.EchoResponse>}
  */
 const methodDescriptor_EchoService_EchoAbort = new grpc.web.MethodDescriptor(
-  '/grpc.gateway.testing.EchoService/EchoAbort',
+  '/testing.EchoService/EchoAbort',
   grpc.web.MethodType.UNARY,
-  proto.grpc.gateway.testing.EchoRequest,
-  proto.grpc.gateway.testing.EchoResponse,
+  proto.testing.EchoRequest,
+  proto.testing.EchoResponse,
   /**
-   * @param {!proto.grpc.gateway.testing.EchoRequest} request
+   * @param {!proto.testing.EchoRequest} request
    * @return {!Uint8Array}
    */
   function(request) {
     return request.serializeBinary();
   },
-  proto.grpc.gateway.testing.EchoResponse.deserializeBinary
+  proto.testing.EchoResponse.deserializeBinary
 );
 
 
 /**
- * @param {!proto.grpc.gateway.testing.EchoRequest} request The
+ * @param {!proto.testing.EchoRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.RpcError, ?proto.grpc.gateway.testing.EchoResponse)}
+ * @param {function(?grpc.web.RpcError, ?proto.testing.EchoResponse)}
  *     callback The callback function(error, response)
- * @return {!grpc.web.ClientReadableStream<!proto.grpc.gateway.testing.EchoResponse>|undefined}
+ * @return {!grpc.web.ClientReadableStream<!proto.testing.EchoResponse>|undefined}
  *     The XHR Node Readable Stream
  */
-proto.grpc.gateway.testing.EchoServiceClient.prototype.echoAbort =
+proto.testing.EchoServiceClient.prototype.echoAbort =
     function(request, metadata, callback) {
   return this.client_.rpcCall(this.hostname_ +
-      '/grpc.gateway.testing.EchoService/EchoAbort',
+      '/testing.EchoService/EchoAbort',
       request,
       metadata || {},
       methodDescriptor_EchoService_EchoAbort,
@@ -177,17 +175,17 @@ proto.grpc.gateway.testing.EchoServiceClient.prototype.echoAbort =
 
 
 /**
- * @param {!proto.grpc.gateway.testing.EchoRequest} request The
+ * @param {!proto.testing.EchoRequest} request The
  *     request proto
  * @param {?Object<string, string>=} metadata User defined
  *     call metadata
- * @return {!Promise<!proto.grpc.gateway.testing.EchoResponse>}
+ * @return {!Promise<!proto.testing.EchoResponse>}
  *     Promise that resolves to the response
  */
-proto.grpc.gateway.testing.EchoServicePromiseClient.prototype.echoAbort =
+proto.testing.EchoServicePromiseClient.prototype.echoAbort =
     function(request, metadata) {
   return this.client_.unaryCall(this.hostname_ +
-      '/grpc.gateway.testing.EchoService/EchoAbort',
+      '/testing.EchoService/EchoAbort',
       request,
       metadata || {},
       methodDescriptor_EchoService_EchoAbort);
@@ -197,39 +195,39 @@ proto.grpc.gateway.testing.EchoServicePromiseClient.prototype.echoAbort =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
- *   !proto.grpc.gateway.testing.Empty,
- *   !proto.grpc.gateway.testing.Empty>}
+ *   !proto.testing.Empty,
+ *   !proto.testing.Empty>}
  */
 const methodDescriptor_EchoService_NoOp = new grpc.web.MethodDescriptor(
-  '/grpc.gateway.testing.EchoService/NoOp',
+  '/testing.EchoService/NoOp',
   grpc.web.MethodType.UNARY,
-  proto.grpc.gateway.testing.Empty,
-  proto.grpc.gateway.testing.Empty,
+  proto.testing.Empty,
+  proto.testing.Empty,
   /**
-   * @param {!proto.grpc.gateway.testing.Empty} request
+   * @param {!proto.testing.Empty} request
    * @return {!Uint8Array}
    */
   function(request) {
     return request.serializeBinary();
   },
-  proto.grpc.gateway.testing.Empty.deserializeBinary
+  proto.testing.Empty.deserializeBinary
 );
 
 
 /**
- * @param {!proto.grpc.gateway.testing.Empty} request The
+ * @param {!proto.testing.Empty} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.RpcError, ?proto.grpc.gateway.testing.Empty)}
+ * @param {function(?grpc.web.RpcError, ?proto.testing.Empty)}
  *     callback The callback function(error, response)
- * @return {!grpc.web.ClientReadableStream<!proto.grpc.gateway.testing.Empty>|undefined}
+ * @return {!grpc.web.ClientReadableStream<!proto.testing.Empty>|undefined}
  *     The XHR Node Readable Stream
  */
-proto.grpc.gateway.testing.EchoServiceClient.prototype.noOp =
+proto.testing.EchoServiceClient.prototype.noOp =
     function(request, metadata, callback) {
   return this.client_.rpcCall(this.hostname_ +
-      '/grpc.gateway.testing.EchoService/NoOp',
+      '/testing.EchoService/NoOp',
       request,
       metadata || {},
       methodDescriptor_EchoService_NoOp,
@@ -238,17 +236,17 @@ proto.grpc.gateway.testing.EchoServiceClient.prototype.noOp =
 
 
 /**
- * @param {!proto.grpc.gateway.testing.Empty} request The
+ * @param {!proto.testing.Empty} request The
  *     request proto
  * @param {?Object<string, string>=} metadata User defined
  *     call metadata
- * @return {!Promise<!proto.grpc.gateway.testing.Empty>}
+ * @return {!Promise<!proto.testing.Empty>}
  *     Promise that resolves to the response
  */
-proto.grpc.gateway.testing.EchoServicePromiseClient.prototype.noOp =
+proto.testing.EchoServicePromiseClient.prototype.noOp =
     function(request, metadata) {
   return this.client_.unaryCall(this.hostname_ +
-      '/grpc.gateway.testing.EchoService/NoOp',
+      '/testing.EchoService/NoOp',
       request,
       metadata || {},
       methodDescriptor_EchoService_NoOp);
@@ -258,36 +256,36 @@ proto.grpc.gateway.testing.EchoServicePromiseClient.prototype.noOp =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
- *   !proto.grpc.gateway.testing.ServerStreamingEchoRequest,
- *   !proto.grpc.gateway.testing.ServerStreamingEchoResponse>}
+ *   !proto.testing.ServerStreamingEchoRequest,
+ *   !proto.testing.ServerStreamingEchoResponse>}
  */
 const methodDescriptor_EchoService_ServerStreamingEcho = new grpc.web.MethodDescriptor(
-  '/grpc.gateway.testing.EchoService/ServerStreamingEcho',
+  '/testing.EchoService/ServerStreamingEcho',
   grpc.web.MethodType.SERVER_STREAMING,
-  proto.grpc.gateway.testing.ServerStreamingEchoRequest,
-  proto.grpc.gateway.testing.ServerStreamingEchoResponse,
+  proto.testing.ServerStreamingEchoRequest,
+  proto.testing.ServerStreamingEchoResponse,
   /**
-   * @param {!proto.grpc.gateway.testing.ServerStreamingEchoRequest} request
+   * @param {!proto.testing.ServerStreamingEchoRequest} request
    * @return {!Uint8Array}
    */
   function(request) {
     return request.serializeBinary();
   },
-  proto.grpc.gateway.testing.ServerStreamingEchoResponse.deserializeBinary
+  proto.testing.ServerStreamingEchoResponse.deserializeBinary
 );
 
 
 /**
- * @param {!proto.grpc.gateway.testing.ServerStreamingEchoRequest} request The request proto
+ * @param {!proto.testing.ServerStreamingEchoRequest} request The request proto
  * @param {?Object<string, string>=} metadata User defined
  *     call metadata
- * @return {!grpc.web.ClientReadableStream<!proto.grpc.gateway.testing.ServerStreamingEchoResponse>}
+ * @return {!grpc.web.ClientReadableStream<!proto.testing.ServerStreamingEchoResponse>}
  *     The XHR Node Readable Stream
  */
-proto.grpc.gateway.testing.EchoServiceClient.prototype.serverStreamingEcho =
+proto.testing.EchoServiceClient.prototype.serverStreamingEcho =
     function(request, metadata) {
   return this.client_.serverStreaming(this.hostname_ +
-      '/grpc.gateway.testing.EchoService/ServerStreamingEcho',
+      '/testing.EchoService/ServerStreamingEcho',
       request,
       metadata || {},
       methodDescriptor_EchoService_ServerStreamingEcho);
@@ -295,16 +293,16 @@ proto.grpc.gateway.testing.EchoServiceClient.prototype.serverStreamingEcho =
 
 
 /**
- * @param {!proto.grpc.gateway.testing.ServerStreamingEchoRequest} request The request proto
+ * @param {!proto.testing.ServerStreamingEchoRequest} request The request proto
  * @param {?Object<string, string>=} metadata User defined
  *     call metadata
- * @return {!grpc.web.ClientReadableStream<!proto.grpc.gateway.testing.ServerStreamingEchoResponse>}
+ * @return {!grpc.web.ClientReadableStream<!proto.testing.ServerStreamingEchoResponse>}
  *     The XHR Node Readable Stream
  */
-proto.grpc.gateway.testing.EchoServicePromiseClient.prototype.serverStreamingEcho =
+proto.testing.EchoServicePromiseClient.prototype.serverStreamingEcho =
     function(request, metadata) {
   return this.client_.serverStreaming(this.hostname_ +
-      '/grpc.gateway.testing.EchoService/ServerStreamingEcho',
+      '/testing.EchoService/ServerStreamingEcho',
       request,
       metadata || {},
       methodDescriptor_EchoService_ServerStreamingEcho);
@@ -314,36 +312,36 @@ proto.grpc.gateway.testing.EchoServicePromiseClient.prototype.serverStreamingEch
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
- *   !proto.grpc.gateway.testing.ServerStreamingEchoRequest,
- *   !proto.grpc.gateway.testing.ServerStreamingEchoResponse>}
+ *   !proto.testing.ServerStreamingEchoRequest,
+ *   !proto.testing.ServerStreamingEchoResponse>}
  */
 const methodDescriptor_EchoService_ServerStreamingEchoAbort = new grpc.web.MethodDescriptor(
-  '/grpc.gateway.testing.EchoService/ServerStreamingEchoAbort',
+  '/testing.EchoService/ServerStreamingEchoAbort',
   grpc.web.MethodType.SERVER_STREAMING,
-  proto.grpc.gateway.testing.ServerStreamingEchoRequest,
-  proto.grpc.gateway.testing.ServerStreamingEchoResponse,
+  proto.testing.ServerStreamingEchoRequest,
+  proto.testing.ServerStreamingEchoResponse,
   /**
-   * @param {!proto.grpc.gateway.testing.ServerStreamingEchoRequest} request
+   * @param {!proto.testing.ServerStreamingEchoRequest} request
    * @return {!Uint8Array}
    */
   function(request) {
     return request.serializeBinary();
   },
-  proto.grpc.gateway.testing.ServerStreamingEchoResponse.deserializeBinary
+  proto.testing.ServerStreamingEchoResponse.deserializeBinary
 );
 
 
 /**
- * @param {!proto.grpc.gateway.testing.ServerStreamingEchoRequest} request The request proto
+ * @param {!proto.testing.ServerStreamingEchoRequest} request The request proto
  * @param {?Object<string, string>=} metadata User defined
  *     call metadata
- * @return {!grpc.web.ClientReadableStream<!proto.grpc.gateway.testing.ServerStreamingEchoResponse>}
+ * @return {!grpc.web.ClientReadableStream<!proto.testing.ServerStreamingEchoResponse>}
  *     The XHR Node Readable Stream
  */
-proto.grpc.gateway.testing.EchoServiceClient.prototype.serverStreamingEchoAbort =
+proto.testing.EchoServiceClient.prototype.serverStreamingEchoAbort =
     function(request, metadata) {
   return this.client_.serverStreaming(this.hostname_ +
-      '/grpc.gateway.testing.EchoService/ServerStreamingEchoAbort',
+      '/testing.EchoService/ServerStreamingEchoAbort',
       request,
       metadata || {},
       methodDescriptor_EchoService_ServerStreamingEchoAbort);
@@ -351,21 +349,21 @@ proto.grpc.gateway.testing.EchoServiceClient.prototype.serverStreamingEchoAbort 
 
 
 /**
- * @param {!proto.grpc.gateway.testing.ServerStreamingEchoRequest} request The request proto
+ * @param {!proto.testing.ServerStreamingEchoRequest} request The request proto
  * @param {?Object<string, string>=} metadata User defined
  *     call metadata
- * @return {!grpc.web.ClientReadableStream<!proto.grpc.gateway.testing.ServerStreamingEchoResponse>}
+ * @return {!grpc.web.ClientReadableStream<!proto.testing.ServerStreamingEchoResponse>}
  *     The XHR Node Readable Stream
  */
-proto.grpc.gateway.testing.EchoServicePromiseClient.prototype.serverStreamingEchoAbort =
+proto.testing.EchoServicePromiseClient.prototype.serverStreamingEchoAbort =
     function(request, metadata) {
   return this.client_.serverStreaming(this.hostname_ +
-      '/grpc.gateway.testing.EchoService/ServerStreamingEchoAbort',
+      '/testing.EchoService/ServerStreamingEchoAbort',
       request,
       metadata || {},
       methodDescriptor_EchoService_ServerStreamingEchoAbort);
 };
 
 
-module.exports = proto.grpc.gateway.testing;
+module.exports = proto.testing;
 
