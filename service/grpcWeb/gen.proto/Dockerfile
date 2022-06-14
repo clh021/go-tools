@@ -46,18 +46,15 @@ RUN git clone https://github.com/golang/protobuf /golang/go/src/github.com/golan
 
 ENV PROTOC_GEN_GRPC_WEB_VERSION 1.3.1
 
-RUN git clone https://github.com/grpc/grpc-web /github/grpc-web && \
-    cd /github/grpc-web && \
-    git fetch --all --tags --prune && \
-    git checkout tags/$PROTOC_GEN_GRPC_WEB_VERSION && \
-    make install-plugin && \
-    rm -rf /github
+RUN wget -c https://github.com/grpc/grpc-web/releases/download/$PROTOC_GEN_GRPC_WEB_VERSION/protoc-gen-grpc-web-$PROTOC_GEN_GRPC_WEB_VERSION-linux-x86_64 \
+    -O /usr/local/bin/protoc-gen-grpc-web \
+    && chmod +x /usr/local/bin/protoc-gen-grpc-web
 
 ## Install protoc-gen-ts
 
-ENV PROTOC_GEN_TS_VERSION 0.15.0
+# ENV PROTOC_GEN_TS_VERSION 0.15.0
 
-RUN npm install ts-protoc-gen google-protobuf@$PROTOBUF_VERSION && \
+RUN npm install ts-protoc-gen google-protobuf && \
     ln -s /node_modules/.bin/protoc-gen-ts /usr/local/bin/protoc-gen-ts
 
 ## Install protoc-gen-python
