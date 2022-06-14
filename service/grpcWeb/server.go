@@ -6,19 +6,19 @@ import (
 	"net"
 
 	"google.golang.org/grpc"
-	"test/service/grpcWeb/todo"
+	"test/service/grpcWeb/echoing"
 )
 
 func Main() {
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", 50096))
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", 8080))
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
 
-	s := todo.Server{}
+	s := echoing.Server{}
 	grpcServer := grpc.NewServer()
 
-	todo.RegisterTodoServiceServer(grpcServer, &s)
+	echoing.RegisterEchoServiceServer(grpcServer, &s)
 
 	if err := grpcServer.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %s", err)
