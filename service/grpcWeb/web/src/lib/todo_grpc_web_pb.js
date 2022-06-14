@@ -6,7 +6,6 @@
 
 // GENERATED CODE -- DO NOT EDIT!
 
-
 /* eslint-disable */
 // @ts-nocheck
 
@@ -16,7 +15,7 @@ const grpc = {};
 grpc.web = require('grpc-web');
 
 const proto = {};
-proto.todo = require('./todo_pb.js');
+proto.todo = require('./todo_pb');
 
 /**
  * @param {string} hostname
