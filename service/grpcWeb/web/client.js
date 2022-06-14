@@ -36,7 +36,7 @@ StreamResponseInterceptor.prototype.intercept = function(request, invoker) {
 };
 
 var opts = {'streamInterceptors' : [new StreamResponseInterceptor()]};
-var echoService = new EchoServiceClient('http://'+window.location.hostname+':80801', null,
+var echoService = new EchoServiceClient('http://'+window.location.hostname+':18080', null,
                                         null);
 //                                      opts);
 

@@ -6,11 +6,20 @@ import (
 	"net"
 
 	"google.golang.org/grpc"
+	"runtime/debug"
 	"test/service/grpcWeb/echoing"
 )
 
 func Main() {
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", 80801))
+
+	// 退出自动恢复服务
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Printf("%s\n\n%s\n", r, debug.Stack())
+		}
+	}()
+
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", 18080))
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
