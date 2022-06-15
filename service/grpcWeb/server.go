@@ -19,9 +19,11 @@ func Main() {
 		}
 	}()
 
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", 18080))
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", 18081))
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
+	} else {
+		log.Printf("Server listen on port 0.0.0.0:18081.")
 	}
 
 	s := echoing.Server{}

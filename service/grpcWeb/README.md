@@ -65,3 +65,6 @@ grpc-ecosystem/grpc-gateway简介
 grpc-ecosystem/go-grpc-middleware简介
 gRPC的调用需要考虑安全认证问题。可以使用 grpc-ecosystem/go-grpc-middleware 实现。
 在 gRPC 服务器中可以使用中间件 参考：用GoLang开发gRPC service中间件 在用户应用逻辑调用之前，或在客户端调用服务器之前执行相关操作。这是实现用户认证auth, 日志logging, 消息message, 数据验证validation, 重试或性能监控的完美方式。
+
+
+两种实现方式，均通过 子目录 web(evnoy) 和 vue(improbable-eng) 中的 docker-composer.yaml 方式测试启动
