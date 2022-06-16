@@ -9,6 +9,7 @@ import (
 	"test/service/goAdmin"
 	"test/service/grpcGo/grpcGoClient"
 	"test/service/grpcGo/grpcGoServer"
+	"test/service/grpcVue"
 	"test/service/grpcWeb"
 	"test/service/plantumlModule"
 	"test/service/raccoon"
@@ -35,6 +36,7 @@ func main() {
 	reexec.Register("grpcGoClient", grpcGoClient.Main)
 	reexec.Register("grpcGoServer", grpcGoServer.Main)
 	reexec.Register("grpcWeb", grpcWeb.Main)
+	reexec.Register("grpcVue", grpcVue.Main)
 	reexec.Register("raccoon", raccoon.Main)
 	lnksutils.IsFileExist("index.html")
 	cmd := os.Getenv("APPINTO")

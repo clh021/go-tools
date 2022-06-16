@@ -3,7 +3,7 @@ syntax = "proto3"; // 要使用的 protocol buffer 版本
 // package grpc.gateway.testing; // for name space
 package testing; // for name space 修改这一行不仅仅影响 javascript request route 也影响 golang 生成服务
 
-option go_package = "test/service/grpcWeb/echoing"; // generated code 的 full Go import path
+option go_package = "test/service/grpcVue/echoing"; // generated code 的 full Go import path
 
 // 使用 message 定义资料交换的格式
 

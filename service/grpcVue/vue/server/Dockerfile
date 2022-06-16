@@ -1,4 +1,4 @@
 FROM scratch
 COPY ./server ./
-ENV APPINTO=grpcWeb
+ENV APPINTO=grpcVue
 ENTRYPOINT ["./server"]
