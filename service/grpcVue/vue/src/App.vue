@@ -16,6 +16,7 @@ export default {
     HelloWorld
   },
   created: () => {
+    console.log("EchoServiceClient:", EchoServiceClient);
     const req = new EchoRequest();
     const grpcRequest = grpc.unary(EchoService.Echo, {
       request: req,
