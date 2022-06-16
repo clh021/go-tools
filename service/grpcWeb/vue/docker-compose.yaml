@@ -1,0 +1,12 @@
+version: '2.4'
+services:
+  server:
+    build: server
+    ports:
+    - 18080:18081
+  web:
+    build: .
+    ports:
+      - 8081:80
+    depends_on: 
+      - server
