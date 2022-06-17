@@ -32,7 +32,7 @@ func (s *Server) NoOp(ctx context.Context, req *Empty) (*Empty, error) {
 }
 
 func (s *Server) ServerStreamingEcho(ctx *ServerStreamingEchoRequest, stream EchoService_ServerStreamingEchoServer) error {
-	log.Printf("Received new ServerStreamingEcho request test")
+	log.Printf("Received new ServerStreamingEcho request")
 	for i := 0; i < 10; i++ {
 		log.Printf(" streaming resp %d", i)
 		resp := &ServerStreamingEchoResponse{Message: fmt.Sprintf("resp %d", i)}

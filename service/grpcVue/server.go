@@ -11,7 +11,7 @@ import (
 	"github.com/improbable-eng/grpc-web/go/grpcweb"
 	"google.golang.org/grpc"
 	"runtime/debug"
-	"test/service/grpcWeb/echoing"
+	"test/service/grpcVue/echoing"
 )
 
 func getWrapServer(grpcServer *grpc.Server) *grpcweb.WrappedGrpcServer {
