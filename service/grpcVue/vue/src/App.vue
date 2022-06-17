@@ -17,13 +17,13 @@
 <script>
 
 import { grpc } from "@improbable-eng/grpc-web";
-import { EchoService, EchoServiceClient } from "./lib/echo_pb_service";
+import { EchoService, EchoServiceClient } from "./lib/echov_pb_service";
 import {
   ClientStreamingEchoRequest,
   EchoRequest,
   Empty,
   ServerStreamingEchoRequest
-} from "./lib/echo_pb";
+} from "./lib/echov_pb";
 const host = "http://192.168.1.68:18081";
 console.log("EchoServiceClient:", EchoServiceClient);
 

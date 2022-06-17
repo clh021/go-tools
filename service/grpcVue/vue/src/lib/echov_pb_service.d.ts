@@ -1,7 +1,7 @@
 // package: testing
-// file: echo.proto
+// file: echov.proto
 
-import * as echo_pb from "./echo_pb";
+import * as echov_pb from "./echov_pb";
 import {grpc} from "@improbable-eng/grpc-web";
 
 type EchoServiceEcho = {
@@ -9,8 +9,8 @@ type EchoServiceEcho = {
   readonly service: typeof EchoService;
   readonly requestStream: false;
   readonly responseStream: false;
-  readonly requestType: typeof echo_pb.EchoRequest;
-  readonly responseType: typeof echo_pb.EchoResponse;
+  readonly requestType: typeof echov_pb.EchoRequest;
+  readonly responseType: typeof echov_pb.EchoResponse;
 };
 
 type EchoServiceEchoAbort = {
@@ -18,8 +18,8 @@ type EchoServiceEchoAbort = {
   readonly service: typeof EchoService;
   readonly requestStream: false;
   readonly responseStream: false;
-  readonly requestType: typeof echo_pb.EchoRequest;
-  readonly responseType: typeof echo_pb.EchoResponse;
+  readonly requestType: typeof echov_pb.EchoRequest;
+  readonly responseType: typeof echov_pb.EchoResponse;
 };
 
 type EchoServiceNoOp = {
@@ -27,8 +27,8 @@ type EchoServiceNoOp = {
   readonly service: typeof EchoService;
   readonly requestStream: false;
   readonly responseStream: false;
-  readonly requestType: typeof echo_pb.Empty;
-  readonly responseType: typeof echo_pb.Empty;
+  readonly requestType: typeof echov_pb.Empty;
+  readonly responseType: typeof echov_pb.Empty;
 };
 
 type EchoServiceServerStreamingEcho = {
@@ -36,8 +36,8 @@ type EchoServiceServerStreamingEcho = {
   readonly service: typeof EchoService;
   readonly requestStream: false;
   readonly responseStream: true;
-  readonly requestType: typeof echo_pb.ServerStreamingEchoRequest;
-  readonly responseType: typeof echo_pb.ServerStreamingEchoResponse;
+  readonly requestType: typeof echov_pb.ServerStreamingEchoRequest;
+  readonly responseType: typeof echov_pb.ServerStreamingEchoResponse;
 };
 
 type EchoServiceServerStreamingEchoAbort = {
@@ -45,8 +45,8 @@ type EchoServiceServerStreamingEchoAbort = {
   readonly service: typeof EchoService;
   readonly requestStream: false;
   readonly responseStream: true;
-  readonly requestType: typeof echo_pb.ServerStreamingEchoRequest;
-  readonly responseType: typeof echo_pb.ServerStreamingEchoResponse;
+  readonly requestType: typeof echov_pb.ServerStreamingEchoRequest;
+  readonly responseType: typeof echov_pb.ServerStreamingEchoResponse;
 };
 
 type EchoServiceClientStreamingEcho = {
@@ -54,8 +54,8 @@ type EchoServiceClientStreamingEcho = {
   readonly service: typeof EchoService;
   readonly requestStream: true;
   readonly responseStream: false;
-  readonly requestType: typeof echo_pb.ClientStreamingEchoRequest;
-  readonly responseType: typeof echo_pb.ClientStreamingEchoResponse;
+  readonly requestType: typeof echov_pb.ClientStreamingEchoRequest;
+  readonly responseType: typeof echov_pb.ClientStreamingEchoResponse;
 };
 
 type EchoServiceFullDuplexEcho = {
@@ -63,8 +63,8 @@ type EchoServiceFullDuplexEcho = {
   readonly service: typeof EchoService;
   readonly requestStream: true;
   readonly responseStream: true;
-  readonly requestType: typeof echo_pb.EchoRequest;
-  readonly responseType: typeof echo_pb.EchoResponse;
+  readonly requestType: typeof echov_pb.EchoRequest;
+  readonly responseType: typeof echov_pb.EchoResponse;
 };
 
 type EchoServiceHalfDuplexEcho = {
@@ -72,8 +72,8 @@ type EchoServiceHalfDuplexEcho = {
   readonly service: typeof EchoService;
   readonly requestStream: true;
   readonly responseStream: true;
-  readonly requestType: typeof echo_pb.EchoRequest;
-  readonly responseType: typeof echo_pb.EchoResponse;
+  readonly requestType: typeof echov_pb.EchoRequest;
+  readonly responseType: typeof echov_pb.EchoResponse;
 };
 
 export class EchoService {
@@ -121,36 +121,36 @@ export class EchoServiceClient {
 
   constructor(serviceHost: string, options?: grpc.RpcOptions);
   echo(
-    requestMessage: echo_pb.EchoRequest,
+    requestMessage: echov_pb.EchoRequest,
     metadata: grpc.Metadata,
-    callback: (error: ServiceError|null, responseMessage: echo_pb.EchoResponse|null) => void
+    callback: (error: ServiceError|null, responseMessage: echov_pb.EchoResponse|null) => void
   ): UnaryResponse;
   echo(
-    requestMessage: echo_pb.EchoRequest,
-    callback: (error: ServiceError|null, responseMessage: echo_pb.EchoResponse|null) => void
+    requestMessage: echov_pb.EchoRequest,
+    callback: (error: ServiceError|null, responseMessage: echov_pb.EchoResponse|null) => void
   ): UnaryResponse;
   echoAbort(
-    requestMessage: echo_pb.EchoRequest,
+    requestMessage: echov_pb.EchoRequest,
     metadata: grpc.Metadata,
-    callback: (error: ServiceError|null, responseMessage: echo_pb.EchoResponse|null) => void
+    callback: (error: ServiceError|null, responseMessage: echov_pb.EchoResponse|null) => void
   ): UnaryResponse;
   echoAbort(
-    requestMessage: echo_pb.EchoRequest,
-    callback: (error: ServiceError|null, responseMessage: echo_pb.EchoResponse|null) => void
+    requestMessage: echov_pb.EchoRequest,
+    callback: (error: ServiceError|null, responseMessage: echov_pb.EchoResponse|null) => void
   ): UnaryResponse;
   noOp(
-    requestMessage: echo_pb.Empty,
+    requestMessage: echov_pb.Empty,
     metadata: grpc.Metadata,
-    callback: (error: ServiceError|null, responseMessage: echo_pb.Empty|null) => void
+    callback: (error: ServiceError|null, responseMessage: echov_pb.Empty|null) => void
   ): UnaryResponse;
   noOp(
-    requestMessage: echo_pb.Empty,
-    callback: (error: ServiceError|null, responseMessage: echo_pb.Empty|null) => void
+    requestMessage: echov_pb.Empty,
+    callback: (error: ServiceError|null, responseMessage: echov_pb.Empty|null) => void
   ): UnaryResponse;
-  serverStreamingEcho(requestMessage: echo_pb.ServerStreamingEchoRequest, metadata?: grpc.Metadata): ResponseStream<echo_pb.ServerStreamingEchoResponse>;
-  serverStreamingEchoAbort(requestMessage: echo_pb.ServerStreamingEchoRequest, metadata?: grpc.Metadata): ResponseStream<echo_pb.ServerStreamingEchoResponse>;
-  clientStreamingEcho(metadata?: grpc.Metadata): RequestStream<echo_pb.ClientStreamingEchoRequest>;
-  fullDuplexEcho(metadata?: grpc.Metadata): BidirectionalStream<echo_pb.EchoRequest, echo_pb.EchoResponse>;
-  halfDuplexEcho(metadata?: grpc.Metadata): BidirectionalStream<echo_pb.EchoRequest, echo_pb.EchoResponse>;
+  serverStreamingEcho(requestMessage: echov_pb.ServerStreamingEchoRequest, metadata?: grpc.Metadata): ResponseStream<echov_pb.ServerStreamingEchoResponse>;
+  serverStreamingEchoAbort(requestMessage: echov_pb.ServerStreamingEchoRequest, metadata?: grpc.Metadata): ResponseStream<echov_pb.ServerStreamingEchoResponse>;
+  clientStreamingEcho(metadata?: grpc.Metadata): RequestStream<echov_pb.ClientStreamingEchoRequest>;
+  fullDuplexEcho(metadata?: grpc.Metadata): BidirectionalStream<echov_pb.EchoRequest, echov_pb.EchoResponse>;
+  halfDuplexEcho(metadata?: grpc.Metadata): BidirectionalStream<echov_pb.EchoRequest, echov_pb.EchoResponse>;
 }
 

@@ -1,8 +1,7 @@
-/* eslint-disable */
 // package: testing
-// file: echo.proto
+// file: echov.proto
 
-var echo_pb = require("./echo_pb");
+var echov_pb = require("./echov_pb");
 var grpc = require("@improbable-eng/grpc-web").grpc;
 
 var EchoService = (function () {
@@ -16,8 +15,8 @@ EchoService.Echo = {
   service: EchoService,
   requestStream: false,
   responseStream: false,
-  requestType: echo_pb.EchoRequest,
-  responseType: echo_pb.EchoResponse
+  requestType: echov_pb.EchoRequest,
+  responseType: echov_pb.EchoResponse
 };
 
 EchoService.EchoAbort = {
@@ -25,8 +24,8 @@ EchoService.EchoAbort = {
   service: EchoService,
   requestStream: false,
   responseStream: false,
-  requestType: echo_pb.EchoRequest,
-  responseType: echo_pb.EchoResponse
+  requestType: echov_pb.EchoRequest,
+  responseType: echov_pb.EchoResponse
 };
 
 EchoService.NoOp = {
@@ -34,8 +33,8 @@ EchoService.NoOp = {
   service: EchoService,
   requestStream: false,
   responseStream: false,
-  requestType: echo_pb.Empty,
-  responseType: echo_pb.Empty
+  requestType: echov_pb.Empty,
+  responseType: echov_pb.Empty
 };
 
 EchoService.ServerStreamingEcho = {
@@ -43,8 +42,8 @@ EchoService.ServerStreamingEcho = {
   service: EchoService,
   requestStream: false,
   responseStream: true,
-  requestType: echo_pb.ServerStreamingEchoRequest,
-  responseType: echo_pb.ServerStreamingEchoResponse
+  requestType: echov_pb.ServerStreamingEchoRequest,
+  responseType: echov_pb.ServerStreamingEchoResponse
 };
 
 EchoService.ServerStreamingEchoAbort = {
@@ -52,8 +51,8 @@ EchoService.ServerStreamingEchoAbort = {
   service: EchoService,
   requestStream: false,
   responseStream: true,
-  requestType: echo_pb.ServerStreamingEchoRequest,
-  responseType: echo_pb.ServerStreamingEchoResponse
+  requestType: echov_pb.ServerStreamingEchoRequest,
+  responseType: echov_pb.ServerStreamingEchoResponse
 };
 
 EchoService.ClientStreamingEcho = {
@@ -61,8 +60,8 @@ EchoService.ClientStreamingEcho = {
   service: EchoService,
   requestStream: true,
   responseStream: false,
-  requestType: echo_pb.ClientStreamingEchoRequest,
-  responseType: echo_pb.ClientStreamingEchoResponse
+  requestType: echov_pb.ClientStreamingEchoRequest,
+  responseType: echov_pb.ClientStreamingEchoResponse
 };
 
 EchoService.FullDuplexEcho = {
@@ -70,8 +69,8 @@ EchoService.FullDuplexEcho = {
   service: EchoService,
   requestStream: true,
   responseStream: true,
-  requestType: echo_pb.EchoRequest,
-  responseType: echo_pb.EchoResponse
+  requestType: echov_pb.EchoRequest,
+  responseType: echov_pb.EchoResponse
 };
 
 EchoService.HalfDuplexEcho = {
@@ -79,8 +78,8 @@ EchoService.HalfDuplexEcho = {
   service: EchoService,
   requestStream: true,
   responseStream: true,
-  requestType: echo_pb.EchoRequest,
-  responseType: echo_pb.EchoResponse
+  requestType: echov_pb.EchoRequest,
+  responseType: echov_pb.EchoResponse
 };
 
 exports.EchoService = EchoService;

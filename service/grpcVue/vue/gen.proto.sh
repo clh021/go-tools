@@ -9,9 +9,10 @@ docker run --rm \
     leehom/grpc-web-generators \
     protoc -I /api \
         --plugin=protoc-gen-ts=/usr/local/bin/protoc-gen-ts \
+        --go_out=plugins=grpc,paths=source_relative:/goclient \
         --js_out=import_style=commonjs,binary:/jsclient \
         --ts_out=service=grpc-web:/jsclient \
-        /api/echo.proto
+        /api/echov.proto
 
 # protoc \
 #   --plugin=protoc-gen-ts=/usr/local/bin/protoc-gen-ts \
