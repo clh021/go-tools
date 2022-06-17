@@ -13,7 +13,7 @@ ProjectPath="$(dirname "$(dirname "$(dirname "$(dirname "$SCRIPT_PATH")")")")"
 prepareServer() {
     pushd "$ProjectPath" > /dev/null
     pwd
-    ./build.sh
+#    ./build.sh
     cp ./bin/app ./service/grpcVue/vue/server/server
     popd > /dev/null
 }

@@ -50,7 +50,7 @@ func getWrapServer(grpcServer *grpc.Server) *grpcweb.WrappedGrpcServer {
 
 func Main() {
 
-	// 退出自动恢复服务
+	// 退出时自动恢复 服务
 	defer func() {
 		if r := recover(); r != nil {
 			fmt.Printf("%s\n\n%s\n", r, debug.Stack())
