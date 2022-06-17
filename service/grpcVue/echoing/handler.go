@@ -1,4 +1,4 @@
-package echoing
+package echovue
 
 import (
 	"fmt"

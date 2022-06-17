@@ -3,8 +3,8 @@ webPath=$(pwd)
 servicePath="$(dirname "$webPath")"
 docker run --rm \
     --user "$(id -u):$(id -g)" \
-    -v "${servicePath}"/echoing:/api \
-    -v "${servicePath}"/echoing:/goclient \
+    -v "${servicePath}"/echovue:/api \
+    -v "${servicePath}"/echovue:/goclient \
     -v "${servicePath}"/vue/src/lib:/jsclient \
     leehom/grpc-web-generators \
     protoc -I /api \

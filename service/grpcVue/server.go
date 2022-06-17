@@ -11,7 +11,7 @@ import (
 	"github.com/improbable-eng/grpc-web/go/grpcweb"
 	"google.golang.org/grpc"
 	"runtime/debug"
-	"test/service/grpcVue/echoing"
+	"test/service/grpcVue/echovue"
 )
 
 func getWrapServer(grpcServer *grpc.Server) *grpcweb.WrappedGrpcServer {
@@ -62,11 +62,11 @@ func Main() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 
-	echoService := echoing.Server{}
+	echoService := echovue.Server{}
 
 	grpcServer := grpc.NewServer()
 
-	echoing.RegisterEchoServiceServer(grpcServer, &echoService)
+	echovue.RegisterEchoServiceServer(grpcServer, &echoService)
 	wrappedGrpc := getWrapServer(grpcServer)
 
 	log.Println("Register NProxy at", lis.Addr().String())

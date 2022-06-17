@@ -6,7 +6,7 @@
 
 // package grpc.gateway.testing; // for name space
 
-package echoing
+package echovue
 
 import (
 	context "context"
