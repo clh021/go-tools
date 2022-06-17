@@ -34,7 +34,7 @@ func (s *Server) NoOp(ctx context.Context, req *Empty) (*Empty, error) {
 func (s *Server) ServerStreamingEcho(ctx *ServerStreamingEchoRequest, stream EchoService_ServerStreamingEchoServer) error {
 	log.Printf("Received new ServerStreamingEcho request")
 	for i := 0; i < 10; i++ {
-		log.Printf(" streaming resp %d", i)
+		log.Printf(" ServerStreamingEcho resp %d", i)
 		resp := &ServerStreamingEchoResponse{Message: fmt.Sprintf("ServerStreamingEcho resp %d", i)}
 		if err := stream.Send(resp); err != nil {
 			return err
@@ -46,7 +46,7 @@ func (s *Server) ServerStreamingEcho(ctx *ServerStreamingEchoRequest, stream Ech
 func (s *Server) ServerStreamingEchoAbort(ctx *ServerStreamingEchoRequest, streamAbort EchoService_ServerStreamingEchoAbortServer) error {
 	log.Printf("Received new ServerStreamingEchoAbort request")
 	for i := 0; i < 10; i++ {
-		log.Printf(" streaming resp %d", i)
+		log.Printf(" ServerStreamingEchoAbort resp %d", i)
 		resp := &ServerStreamingEchoResponse{Message: fmt.Sprintf("ServerStreamingEchoAbort resp %d", i)}
 		if err := streamAbort.Send(resp); err != nil {
 			return err
