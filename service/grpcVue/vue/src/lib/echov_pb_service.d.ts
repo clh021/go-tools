@@ -1,4 +1,4 @@
-// package: testing
+// package: testing2
 // file: echov.proto
 
 import * as echov_pb from "./echov_pb";

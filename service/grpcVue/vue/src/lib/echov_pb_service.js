@@ -1,4 +1,4 @@
-// package: testing
+// package: testing2
 // file: echov.proto
 
 var echov_pb = require("./echov_pb");
@@ -6,7 +6,7 @@ var grpc = require("@improbable-eng/grpc-web").grpc;
 
 var EchoService = (function () {
   function EchoService() {}
-  EchoService.serviceName = "testing.EchoService";
+  EchoService.serviceName = "testing2.EchoService";
   return EchoService;
 }());
 
