@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"test/service/caddyModule"
+	"test/service/dmidecode"
 	"test/service/fileModule"
 	"test/service/ginExample"
 	"test/service/goAdmin"
@@ -38,6 +39,7 @@ func main() {
 	reexec.Register("grpcWeb", grpcWeb.Main)
 	reexec.Register("grpcVue", grpcVue.Main)
 	reexec.Register("raccoon", raccoon.Main)
+	reexec.Register("dmidecode", dmidecode.Main)
 	lnksutils.IsFileExist("index.html")
 	cmd := os.Getenv("APPINTO")
 	os.Unsetenv("APPINTO")
