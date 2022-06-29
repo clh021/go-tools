@@ -14,6 +14,7 @@ prepareServer() {
     pushd "$ProjectPath" > /dev/null
     pwd
     ./build.sh
+    # 注意容器中应设置 RUN CGO_ENABLED=0 go build
     cp ./bin/app ./service/grpcWeb/web/server/server
     popd > /dev/null
 }

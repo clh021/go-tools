@@ -10,7 +10,7 @@ go generate
 
 
 
-
+export CGO_ENABLED=0
 go build -ldflags "-X main.build=${gitTime}.${gitCID}" -o "bin/app"
 
 
