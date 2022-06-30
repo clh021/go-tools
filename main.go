@@ -11,6 +11,8 @@ import (
 	"test/service/grpcGo/grpcGoClient"
 	"test/service/grpcGo/grpcGoServer"
 	"test/service/grpcVue"
+	"test/service/grpcWS"
+	grpcWSClient "test/service/grpcWS/client"
 	"test/service/grpcWeb"
 	"test/service/plantumlModule"
 	"test/service/raccoon"
@@ -36,6 +38,8 @@ func main() {
 	reexec.Register("websocketGo", websocketGo.Main)
 	reexec.Register("grpcGoClient", grpcGoClient.Main)
 	reexec.Register("grpcGoServer", grpcGoServer.Main)
+	reexec.Register("grpcWS", grpcWS.Main)
+	reexec.Register("grpcWSClient", grpcWSClient.Main)
 	reexec.Register("grpcWeb", grpcWeb.Main)
 	reexec.Register("grpcVue", grpcVue.Main)
 	reexec.Register("raccoon", raccoon.Main)
