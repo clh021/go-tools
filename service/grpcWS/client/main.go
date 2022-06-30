@@ -1,4 +1,4 @@
-package main
+package client
 
 import (
 	"bufio"
@@ -7,12 +7,12 @@ import (
 	"log"
 	"os"
 
-	proto "chat" // 根据proto文件自动生成的代码
+	proto "test/service/grpcWS/chat" // 根据proto文件自动生成的代码
 
 	"google.golang.org/grpc"
 )
 
-func main() {
+func Main() {
 	// 创建连接
 	conn, err := grpc.Dial("localhost:3000", grpc.WithInsecure())
 	if err != nil {

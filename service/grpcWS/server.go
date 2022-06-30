@@ -1,11 +1,12 @@
-package main
+package grpcWS
 
 import (
-	proto "chat" // 自动生成的 proto代码
 	"io"
 	"log"
 	"net"
 	"strconv"
+
+	proto "test/service/grpcWS/chat" // 自动生成的 proto代码
 
 	"google.golang.org/grpc"
 )
@@ -63,7 +64,7 @@ func (s *Streamer) BidStream(stream proto.Chat_BidStreamServer) error {
 	}
 }
 
-func main() {
+func Main() {
 	log.Println("启动服务端...")
 	server := grpc.NewServer()
 
