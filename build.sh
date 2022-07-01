@@ -1,9 +1,10 @@
 #!/bin/bash
 echo "正在准备编译标记版本"
-# gitTime=$(git log -1 --format=%at | xargs -I{} date -d @{} +%Y%m%d_%H%M%S)
-gitTime=$(date +00%y%m%d%H%M%S)
-gitCID=`git rev-parse HEAD`
-
+gitTime=$(git log -1 --format=%at | xargs -I{} date -d @{} +%Y%m%d_%H%M%S)
+# gitTime=$(date +%Y%m%d%H%M%S)
+gitCID=$(git rev-parse HEAD)
+gitTag=$(git tag --list --sort=version:refname 'v*' | tail -1)
+gitCount=$(git log --pretty=format:'' | wc -l)/$(git rev-list --all --count)
 echo "正在生成静态文件缓存"
 go mod tidy
 go generate
@@ -11,9 +12,7 @@ go generate
 
 
 export CGO_ENABLED=0
-go build -ldflags "-X main.build=${gitTime}.${gitCID}" -o "bin/app"
-
-
+go build -ldflags "-X main.build=${gitTime}.${gitCID:0:7}.${gitTag}.${gitCount}" -o "bin/app"
 
 
 

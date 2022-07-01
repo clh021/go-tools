@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"test/service/caddyModule"
@@ -47,6 +48,27 @@ func regHandles() map[string]func() {
 	}
 }
 
+func parseFlags() ([]string, string) {
+	var output string
+	var args []string
+	var notargs []string
+	var in_flags bool = false
+	for i := 0; i < len(os.Args); i++ {
+		if os.Args[i][0] == '-' {
+			in_flags = true
+		}
+		if i == 0 || in_flags {
+			notargs = append(notargs, os.Args[i])
+		} else {
+			args = append(args, os.Args[i])
+		}
+	}
+	os.Args = notargs
+	flag.StringVar(&output, "o", "", "Writes output to the file specified")
+	flag.Parse()
+	return args, output
+}
+
 func main() {
 	fmt.Printf("Build: %s\n", build)
 	handles := regHandles()
@@ -56,9 +78,13 @@ func main() {
 	lnksutils.IsFileExist("index.html")
 	cmd := os.Getenv("APPINTO")
 	os.Unsetenv("APPINTO")
-	if reexec.Init(cmd) {
-		return
+	if len(cmd) > 0 {
+		if reexec.Init(cmd) {
+			return
+		}
 	}
-	//默认 程序 ginExample
-	// ginExample.Main()
+	fmt.Printf("%+v\r\n", os.Args)
+	args, output := parseFlags()
+	fmt.Println("args ", args)
+	fmt.Println("Flag -o : ", output)
 }
