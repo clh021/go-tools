@@ -83,7 +83,6 @@ func main() {
 			return
 		}
 	}
-	fmt.Printf("%+v\r\n", os.Args)
 	args, output := parseFlags()
 	fmt.Println("args ", args)
 	fmt.Println("Flag -o : ", output)
