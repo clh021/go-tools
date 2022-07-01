@@ -138,6 +138,9 @@ export default {
       const req = new ClientStreamingEchoRequest();
       req.setMessage("Hello" + (new Date()).toISOString());
       this.requestGrpcClient("ClientStreamingEcho", EchoService.ClientStreamingEcho, req);
+      // 一次获取客户端，多次发送
+      // 然后服务端应该可以不停的打印出每次发送过去的消息
+      // 服务端还返回收到消息的总次数
     },
     FullDuplexEcho() {
       const req = new EchoRequest();
