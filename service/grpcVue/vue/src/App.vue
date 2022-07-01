@@ -25,8 +25,8 @@ import {
   ServerStreamingEchoRequest
 } from "./lib/echov_pb";
 const locat = document.location;
-const host = `${locat.protocol}//${locat.hostname}:18081`
-// const host = "http://192.168.1.68:18081";
+const apiPort = location.port == '8081' ? 18080 : 18081;
+const host = `${locat.protocol}//${locat.hostname}:${apiPort}`;
 console.log("EchoServiceClient:", EchoServiceClient);
 
 export default {
