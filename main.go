@@ -27,23 +27,32 @@ import (
 // 需要通过命令 ` go build -ldflags "-X main.build=`git rev-parse HEAD`" ` 打包
 var build = "not set"
 
+func regHandles() map[string]func() {
+	return map[string]func(){
+		"ginExample":     ginExample.Main,
+		"caddyModule":    caddyModule.Main,
+		"fileModule":     fileModule.Main,
+		"plantumlModule": plantumlModule.Main,
+		"goAdmin":        goAdmin.Main,
+		"websocketGin":   websocketGin.Main,
+		"websocketGo":    websocketGo.Main,
+		"grpcGoClient":   grpcGoClient.Main,
+		"grpcGoServer":   grpcGoServer.Main,
+		"grpcWS":         grpcWS.Main,
+		"grpcWSClient":   grpcWSClient.Main,
+		"grpcWeb":        grpcWeb.Main,
+		"grpcVue":        grpcVue.Main,
+		"raccoon":        raccoon.Main,
+		"dmidecode":      dmidecode.Main,
+	}
+}
+
 func main() {
 	fmt.Printf("Build: %s\n", build)
-	reexec.Register("ginExample", ginExample.Main)
-	reexec.Register("caddyModule", caddyModule.Main)
-	reexec.Register("fileModule", fileModule.Main)
-	reexec.Register("plantumlModule", plantumlModule.Main)
-	reexec.Register("goAdmin", goAdmin.Main)
-	reexec.Register("websocketGin", websocketGin.Main)
-	reexec.Register("websocketGo", websocketGo.Main)
-	reexec.Register("grpcGoClient", grpcGoClient.Main)
-	reexec.Register("grpcGoServer", grpcGoServer.Main)
-	reexec.Register("grpcWS", grpcWS.Main)
-	reexec.Register("grpcWSClient", grpcWSClient.Main)
-	reexec.Register("grpcWeb", grpcWeb.Main)
-	reexec.Register("grpcVue", grpcVue.Main)
-	reexec.Register("raccoon", raccoon.Main)
-	reexec.Register("dmidecode", dmidecode.Main)
+	handles := regHandles()
+	for name, funcName := range handles {
+		reexec.Register(name, funcName)
+	}
 	lnksutils.IsFileExist("index.html")
 	cmd := os.Getenv("APPINTO")
 	os.Unsetenv("APPINTO")
