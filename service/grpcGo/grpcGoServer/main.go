@@ -12,10 +12,6 @@ import (
 	"google.golang.org/grpc"
 )
 
-var (
-	port = flag.Int("port", 50051, "The server port")
-)
-
 // server is used to implement helloworld.GreeterServer.
 type server struct {
 	pb.UnimplementedGreeterServer
@@ -28,6 +24,7 @@ func (s *server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloRe
 }
 
 func Main() {
+	port := flag.Int("port", 50051, "The server port")
 	flag.Parse()
 
 	// 创建端口监听服务

@@ -16,12 +16,9 @@ const (
 	defaultName = "world"
 )
 
-var (
-	addr = flag.String("addr", "localhost:50051", "the address to connect to")
-	name = flag.String("name", defaultName, "Name to greet")
-)
-
 func Main() {
+	addr := flag.String("addr", "localhost:50051", "the address to connect to")
+	name := flag.String("name", defaultName, "Name to greet")
 	flag.Parse()
 
 	// 初始化 grpc 连接
