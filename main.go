@@ -14,6 +14,8 @@ import (
 	"test/service/grpcGo2"
 	grpcGo2Client "test/service/grpcGo2/client"
 	"test/service/grpcVue"
+	"test/service/grpcWS"
+	grpcWSClient "test/service/grpcWS/client"
 	"test/service/grpcWeb"
 	"test/service/plantumlModule"
 	"test/service/raccoon"
@@ -41,6 +43,8 @@ func regHandles() map[string]func() {
 		"grpcGoServer":   grpcGoServer.Main,
 		"grpcGo2":        grpcGo2.Main,
 		"grpcGo2Client":  grpcGo2Client.Main,
+		"grpcWS":         grpcWS.Main,
+		"grpcWSClient":   grpcWSClient.Main,
 		"grpcWeb":        grpcWeb.Main,
 		"grpcVue":        grpcVue.Main,
 		"raccoon":        raccoon.Main,

@@ -21,4 +21,5 @@ require (
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/grpc v1.38.0
 	google.golang.org/protobuf v1.27.1
+	gopkg.in/olahol/melody.v1 v1.0.0-20170518105555-d52139073376
 )
