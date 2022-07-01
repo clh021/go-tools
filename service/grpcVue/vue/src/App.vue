@@ -84,27 +84,32 @@ export default {
         }
       });
     },
+    initClient() {
+
+    },
     requestGrpcClient(tag, func, req) {
       console.log(`==========================\n${tag}`)
       grpc.client(func, {
+        debug: true,
         request: req,
         host: host,
+        transport: grpc.WebsocketTransport(),
         onMessage: res => {
           console.log("all ok. got onMessage: ", JSON.stringify(res));
         },
         onEnd: res => {
-          // console.log("all ok. got res: ", JSON.stringify(res));
-          // const { status, statusMessage, headers, message, trailers } = res;
-          // console.log("status: ", status);
-          // console.log("statusMessage: ", statusMessage);
-          // console.log("headers: ", headers);
-          // console.log("trailers: ", trailers);
-          const { status, message } = res;
+          console.log("all ok. got res: ", JSON.stringify(res));
+          const { status, statusMessage, headers, message, trailers } = res;
+          console.log("status: ", status);
+          console.log("statusMessage: ", statusMessage);
+          console.log("headers: ", headers);
+          console.log("trailers: ", trailers);
+          // const { status, message } = res;
           if (status === grpc.Code.OK && message) {
             console.log("all ok. got onEnd: ", message.toObject());
           }
         }
-      });
+      }).start();
     },
     Echo() {
       const req = new EchoRequest();
