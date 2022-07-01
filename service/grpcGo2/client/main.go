@@ -7,7 +7,7 @@ import (
 	"log"
 	"os"
 
-	proto "test/service/grpcWS/chat" // 根据proto文件自动生成的代码
+	proto "test/service/grpcGo2/chat" // 根据proto文件自动生成的代码
 
 	"google.golang.org/grpc"
 )

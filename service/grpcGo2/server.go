@@ -1,4 +1,4 @@
-package grpcWS
+package grpcGo2
 
 import (
 	"io"
@@ -6,7 +6,7 @@ import (
 	"net"
 	"strconv"
 
-	proto "test/service/grpcWS/chat" // 自动生成的 proto代码
+	proto "test/service/grpcGo2/chat" // 自动生成的 proto代码
 
 	"google.golang.org/grpc"
 )

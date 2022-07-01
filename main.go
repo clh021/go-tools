@@ -11,9 +11,9 @@ import (
 	"test/service/goAdmin"
 	"test/service/grpcGo/grpcGoClient"
 	"test/service/grpcGo/grpcGoServer"
+	"test/service/grpcGo2"
+	grpcGo2Client "test/service/grpcGo2/client"
 	"test/service/grpcVue"
-	"test/service/grpcWS"
-	grpcWSClient "test/service/grpcWS/client"
 	"test/service/grpcWeb"
 	"test/service/plantumlModule"
 	"test/service/raccoon"
@@ -39,8 +39,8 @@ func regHandles() map[string]func() {
 		"websocketGo":    websocketGo.Main,
 		"grpcGoClient":   grpcGoClient.Main,
 		"grpcGoServer":   grpcGoServer.Main,
-		"grpcWS":         grpcWS.Main,
-		"grpcWSClient":   grpcWSClient.Main,
+		"grpcGo2":        grpcGo2.Main,
+		"grpcGo2Client":  grpcGo2Client.Main,
 		"grpcWeb":        grpcWeb.Main,
 		"grpcVue":        grpcVue.Main,
 		"raccoon":        raccoon.Main,
