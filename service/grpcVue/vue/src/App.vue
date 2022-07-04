@@ -108,10 +108,14 @@ export default {
       });
       client.start();
       for (let i = 0; i < 5; i++) {
-        req.setMessage(`${i} Hello` + (new Date()).toISOString());
-        client.send(req);
+        setTimeout(() => {
+          req.setMessage(`${i} Hello` + (new Date()).toISOString());
+          client.send(req);
+        }, i*1000)
       }
-      client.finishSend();
+      setTimeout(() => {
+        client.finishSend();
+      }, 6000)
     },
     Echo() {
       const req = new EchoRequest();
