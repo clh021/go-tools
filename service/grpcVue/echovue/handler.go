@@ -103,20 +103,3 @@ func (s *Server) HalfDuplexEcho(halfDuplex EchoService_HalfDuplexEchoServer) err
 	log.Printf("Received new HalfDuplexEcho request")
 	return nil
 }
-
-// func (s *Server) GetTodos(ctx context.Context, _ *GetTodoParams) (*TodoResponse, error) {
-// 	log.Printf("get tasks")
-// 	return &TodoResponse{Todos: s.Todos}, nil
-// }
-
-// func (s *Server) DeleteTodo(ctx context.Context, delTodo *DeleteTodoParams) (*DeleteResponse, error) {
-// 	var updatedTodos []*TodoObject
-// 	for index, todo := range s.Todos {
-// 		if todo.Id == delTodo.Id {
-// 			updatedTodos = append(s.Todos[:index], s.Todos[index+1:]...)
-// 			break
-// 		}
-// 	}
-// 	s.Todos = updatedTodos
-// 	return &DeleteResponse{Message: "success"}, nil
-// }
