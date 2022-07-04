@@ -30,9 +30,9 @@ const host = `${locat.protocol}//${locat.hostname}:${apiPort}`;
 console.log("EchoServiceClient:", EchoServiceClient);
 
 // 'myTransport' is configured to send Browser cookies along with cross-origin requests.
-const myTransport = grpc.CrossBrowserHttpTransport({ withCredentials: true });
+// const myTransport = grpc.CrossBrowserHttpTransport({ withCredentials: true });
 // Specify the default transport before any requests are made.
-grpc.setDefaultTransport(myTransport);
+// grpc.setDefaultTransport(myTransport);
 export default {
   name: 'App',
   data() {
