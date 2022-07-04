@@ -8,9 +8,7 @@
     <button @click="ServerStreamingEchoAbort">ServerStreamingEchoAbort</button> <br>
     <button @click="ClientStreamingEcho">ClientStreamingEcho</button> <br>
     <button @click="FullDuplexEcho">FullDuplexEcho</button> <br>
-    <button @click="HalfDuplexEcho">HalfDuplexEcho</button> <br>
-    单边消息
-    双边数据流消息
+    <button @click="HalfDuplexEcho">HalfDuplexEcho</button>
   </div>
 </template>
 
@@ -41,7 +39,7 @@ export default {
     }
   },
   created() {
-    this.client = new EchoServiceClient(host)
+    // this.client = new EchoServiceClient(host)
   },
   methods:{
     requestGrpcUnary(tag, func, req) {
@@ -153,7 +151,7 @@ export default {
     },
     HalfDuplexEcho() {
       const req = new EchoRequest();
-      req.setMessage("Hello" + (new Date()).toISOString());
+      // req.setMessage("Hello" + (new Date()).toISOString());
       this.requestGrpcClient("HalfDuplexEcho", EchoService.HalfDuplexEcho, req);
     }
   },
