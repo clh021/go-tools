@@ -29,6 +29,10 @@ const apiPort = location.port == '8081' ? 18080 : 18081;
 const host = `${locat.protocol}//${locat.hostname}:${apiPort}`;
 console.log("EchoServiceClient:", EchoServiceClient);
 
+// 'myTransport' is configured to send Browser cookies along with cross-origin requests.
+const myTransport = grpc.CrossBrowserHttpTransport({ withCredentials: true });
+// Specify the default transport before any requests are made.
+grpc.setDefaultTransport(myTransport);
 export default {
   name: 'App',
   data() {
@@ -89,27 +93,27 @@ export default {
     },
     requestGrpcClient(tag, func, req) {
       console.log(`==========================\n${tag}`)
-      grpc.client(func, {
+      const client = grpc.client(func, {
         debug: true,
-        request: req,
         host: host,
+        // transport: myTransport,
         transport: grpc.WebsocketTransport(),
-        onMessage: res => {
-          console.log("all ok. got onMessage: ", JSON.stringify(res));
-        },
-        onEnd: res => {
-          console.log("all ok. got res: ", JSON.stringify(res));
-          const { status, statusMessage, headers, message, trailers } = res;
-          console.log("status: ", status);
-          console.log("statusMessage: ", statusMessage);
-          console.log("headers: ", headers);
-          console.log("trailers: ", trailers);
-          // const { status, message } = res;
-          if (status === grpc.Code.OK && message) {
-            console.log("all ok. got onEnd: ", message.toObject());
-          }
-        }
-      }).start();
+      });
+      client.onHeaders((headers) => {
+        console.log("onHeaders", headers);
+      });
+      client.onMessage((message) => {
+        console.log("onMessage", message, message.messageCount);
+      });
+      client.onEnd((status, statusMessage, trailers) => {
+        console.log("onEnd", status, statusMessage, trailers);
+      });
+      client.start();
+      for (let i = 0; i < 5; i++) {
+        req.setMessage(`${i} Hello` + (new Date()).toISOString());
+        client.send(req);
+      }
+      client.finishSend();
     },
     Echo() {
       const req = new EchoRequest();
@@ -144,7 +148,7 @@ export default {
     },
     FullDuplexEcho() {
       const req = new EchoRequest();
-      req.setMessage("Hello" + (new Date()).toISOString());
+      // req.setMessage("Hello" + (new Date()).toISOString());
       this.requestGrpcClient("FullDuplexEcho", EchoService.FullDuplexEcho, req);
     },
     HalfDuplexEcho() {
