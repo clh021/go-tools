@@ -4,8 +4,10 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"net"
 
 	"golang.org/x/net/context"
+	"google.golang.org/grpc/peer"
 )
 
 type Server struct {
@@ -14,7 +16,7 @@ type Server struct {
 // 一个请求，一个响应
 // 服务器按原样返回客户端消息。
 func (s *Server) Echo(ctx context.Context, req *EchoRequest) (*EchoResponse, error) {
-	log.Printf("Received new echo request %s", req)
+	log.Printf("Received new echo request %s: %s", req, getClietIP(ctx))
 	echoObject := &EchoResponse{
 		Message:      fmt.Sprintf("receive:Echo: %s", req),
 		MessageCount: 1,
@@ -24,7 +26,7 @@ func (s *Server) Echo(ctx context.Context, req *EchoRequest) (*EchoResponse, err
 
 // 发回中止状态。
 func (s *Server) EchoAbort(ctx context.Context, req *EchoRequest) (*EchoResponse, error) {
-	log.Printf("Received new EchoAbort request %s", req)
+	log.Printf("Received new EchoAbort request %s, %s", req, getClietIP(ctx))
 	return &EchoResponse{
 		Message:      fmt.Sprintf("receive:EchoAbort: %s", req),
 		MessageCount: 2,
@@ -34,7 +36,7 @@ func (s *Server) EchoAbort(ctx context.Context, req *EchoRequest) (*EchoResponse
 // 一个空请求，零处理，后接一个空响应
 //（做消息序列化的最小努力）。
 func (s *Server) NoOp(ctx context.Context, req *Empty) (*Empty, error) {
-	log.Printf("Received new NoOp request %s", req)
+	log.Printf("Received new NoOp request %s: %s", req, getClietIP(ctx))
 	return &Empty{}, nil
 }
 
@@ -69,8 +71,8 @@ func (s *Server) ServerStreamingEchoAbort(ctx *ServerStreamingEchoRequest, strea
 // 一系列请求，然后是一个响应（流式上传）。
 // 服务器返回消息的总数作为结果。
 func (s *Server) ClientStreamingEcho(stream EchoService_ClientStreamingEchoServer) error {
-	log.Printf("Received new ClientStreamingEcho request")
 	ctx := stream.Context()
+	log.Printf("Received new ClientStreamingEcho request: %s", getClietIP(ctx))
 	var msgCount int32 = 0
 	for {
 		select {
@@ -104,8 +106,38 @@ func (s *Server) ClientStreamingEcho(stream EchoService_ClientStreamingEchoServe
 // 服务器按顺序返回相同的客户端消息。
 // 例如，这就是语音 API 的工作方式。
 func (s *Server) FullDuplexEcho(fullDuplex EchoService_FullDuplexEchoServer) error {
-	log.Printf("Received new FullDuplexEcho request")
-	return nil
+	ctx := fullDuplex.Context()
+	log.Printf("Received new FullDuplexEcho request: %s", getClietIP(ctx))
+	var msgCount int32 = 0
+	for {
+		select {
+		case <-ctx.Done():
+			log.Println("收到客户端通过context发出的终止信号")
+			return ctx.Err()
+		default:
+			msgCount++
+			// 接收从客户端发来的消息
+			clientStreamReq, err := fullDuplex.Recv()
+			if err == io.EOF {
+				log.Println("客户端发送的数据流结束")
+				return nil
+			}
+			if err != nil {
+				log.Println("接收数据出错:", err)
+				return err
+			}
+			log.Printf(" FullDuplexEcho resp1 %s", clientStreamReq.GetMessage())
+			log.Printf(" FullDuplexEcho resp2 %s", clientStreamReq.String())
+
+			resp := &EchoResponse{
+				Message:      fmt.Sprintf("receive:Echo: %s", clientStreamReq.GetMessage()),
+				MessageCount: 1,
+			}
+			if err := fullDuplex.SendMsg(resp); err != nil {
+				return err
+			}
+		}
+	}
 }
 
 // 一个请求序列，后面跟着一个响应序列。
@@ -114,5 +146,47 @@ func (s *Server) FullDuplexEcho(fullDuplex EchoService_FullDuplexEchoServer) err
 // 这就是图像识别 API 的工作方式。
 func (s *Server) HalfDuplexEcho(halfDuplex EchoService_HalfDuplexEchoServer) error {
 	log.Printf("Received new HalfDuplexEcho request")
-	return nil
+	ctx := halfDuplex.Context()
+	var msgCount int32 = 0
+	for {
+		select {
+		case <-ctx.Done():
+			log.Println("收到客户端通过context发出的终止信号")
+			return ctx.Err()
+		default:
+			msgCount++
+			// 接收从客户端发来的消息
+			clientStreamReq, err := halfDuplex.Recv()
+			if err == io.EOF {
+				log.Println("客户端发送的数据流结束")
+				return nil
+			}
+			if err != nil {
+				log.Println("接收数据出错:", err)
+				return err
+			}
+			log.Printf(" HalfDuplexEcho resp1 %s", clientStreamReq.GetMessage())
+			log.Printf(" HalfDuplexEcho resp2 %s", clientStreamReq.String())
+
+			resp := &EchoResponse{
+				Message:      fmt.Sprintf("receive:Echo: %s", clientStreamReq.GetMessage()),
+				MessageCount: 1,
+			}
+			if err := halfDuplex.Send(resp); err != nil {
+				return err
+			}
+		}
+	}
+}
+
+// 获取客户端地址
+func getClietIP(ctx context.Context) string {
+	pr, ok := peer.FromContext(ctx)
+	if !ok {
+		log.Printf(" HalfDuplexEcho resp2 %s", fmt.Errorf("invoke FromContext() failed"))
+	}
+	if pr.Addr == net.Addr(nil) {
+		log.Printf(" HalfDuplexEcho resp2 %s", fmt.Errorf("peer.Addr is nil"))
+	}
+	return pr.Addr.String()
 }
