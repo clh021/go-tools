@@ -18,74 +18,75 @@ message EchoResponse {
   int32 message_count = 2;
 }
 
-// Request type for server side streaming echo.
+// 服务器端流回显的请求类型。
 message ServerStreamingEchoRequest {
-  // Message string for server streaming request.
+  // 服务器流请求的消息字符串。
   string message = 1;
 
-  // The total number of messages to be generated before the server
-  // closes the stream; default is 10.
+  // 服务端之前要生成的消息总数
+  // 关闭流；默认值为 10。
   int32 message_count = 2;
 
-  // The interval (ms) between two server messages. The server implementation
-  // may enforce some minimum interval (e.g. 100ms) to avoid message overflow.
+  // 两个服务器消息之间的间隔（毫秒）。服务器实现
+  // 可能会强制执行一些最小间隔（例如 100 毫秒）以避免消息溢出。
   int32 message_interval = 3;
 }
 
-// Response type for server streaming response.
+// 服务器流式响应的响应类型。
 message ServerStreamingEchoResponse {
-  // Response message.
+  // 响应消息。
   string message = 1;
 }
 
-// Request type for client side streaming echo.
+// 客户端流式回显的请求类型。
 message ClientStreamingEchoRequest {
-  // A special value "" indicates that there's no further messages.
+  // 特殊值 "" 表示没有更多消息。
   string message = 1;
 }
 
-// Response type for client side streaming echo.
+// 客户端流回显的响应类型。
 message ClientStreamingEchoResponse {
-  // Total number of client messages that have been received.
+  // 已收到的客户端消息总数。
   int32 message_count = 1;
 }
 
 // 使用 service 定义呼叫API 的方法名称
+// 一个简单的回显服务。
 service EchoService {
-  // One request followed by one response
-  // The server returns the client message as-is.
+  // 一个请求，一个响应
+  // 服务器按原样返回客户端消息。
   rpc Echo(EchoRequest) returns (EchoResponse);
 
-  // Sends back abort status.
+  // 发回中止状态。
   rpc EchoAbort(EchoRequest) returns (EchoResponse) {}
 
-  // One empty request, ZERO processing, followed by one empty response
-  // (minimum effort to do message serialization).
+  // 一个空请求，零处理，后接一个空响应
+  //（做消息序列化的最小努力）。
   rpc NoOp(Empty) returns (Empty);
 
-  // One request followed by a sequence of responses (streamed download).
-  // The server will return the same client message repeatedly.
+  // 一个请求后跟一系列响应（流式下载）。
+  // 服务器会重复返回相同的客户端消息。
   rpc ServerStreamingEcho(ServerStreamingEchoRequest)
       returns (stream ServerStreamingEchoResponse);
 
-  // One request followed by a sequence of responses (streamed download).
-  // The server abort directly.
+  // 一个请求后跟一系列响应（流式下载）。
+  // 服务器直接中止。
   rpc ServerStreamingEchoAbort(ServerStreamingEchoRequest)
       returns (stream ServerStreamingEchoResponse) {}
 
-  // A sequence of requests followed by one response (streamed upload).
-  // The server returns the total number of messages as the result.
+  // 一系列请求，然后是一个响应（流式上传）。
+  // 服务器返回消息的总数作为结果。
   rpc ClientStreamingEcho(stream ClientStreamingEchoRequest)
       returns (ClientStreamingEchoResponse);
 
-  // A sequence of requests with each message echoed by the server immediately.
-  // The server returns the same client messages in order.
-  // E.g. this is how the speech API works.
+  // 服务器立即回显每条消息的一系列请求。
+  // 服务器按顺序返回相同的客户端消息。
+  // 例如，这就是语音 API 的工作方式。
   rpc FullDuplexEcho(stream EchoRequest) returns (stream EchoResponse);
 
-  // A sequence of requests followed by a sequence of responses.
-  // The server buffers all the client messages and then returns the same
-  // client messages one by one after the client half-closes the stream.
-  // This is how an image recognition API may work.
+  // 一个请求序列，后面跟着一个响应序列。
+  // 服务器缓存所有客户端消息，然后返回相同的
+  // 客户端半关闭流后，客户端消息一一对应。
+  // 这就是图像识别 API 的工作方式。
   rpc HalfDuplexEcho(stream EchoRequest) returns (stream EchoResponse);
 }
