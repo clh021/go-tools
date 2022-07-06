@@ -18,14 +18,3 @@ docker run -it \
   -v `pwd`/nging_linux_amd64:/host \
   alpine \
   ash
-
-./service/grpcGo2/gen.proto.sh
-./service/grpcVue/vue/server.sh
-./service/grpcVue/vue/gen.proto.sh
-./service/grpcGo/gen.proto.sh
-./service/grpcWS/gen.proto.sh
-./service/grpcWeb/gen.proto.sh
-./service/grpcWeb/web/server.sh
-./service/grpcWeb/web/package.sh
-./build.sh
-./test.sh
