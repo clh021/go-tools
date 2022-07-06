@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# leehom Chen clh021@gmail.com
 webPath=$(pwd)
 servicePath="$(dirname "$webPath")"
 docker run --rm \

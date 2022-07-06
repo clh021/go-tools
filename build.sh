@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# leehom Chen clh021@gmail.com
 echo "正在准备编译标记版本"
 gitTime=$(git log -1 --format=%at | xargs -I{} date -d @{} +%Y%m%d_%H%M%S)
 # gitTime=$(date +%Y%m%d%H%M%S)
