@@ -19,6 +19,7 @@ import (
 	"test/service/grpcWeb"
 	"test/service/plantumlModule"
 	"test/service/raccoon"
+	"test/service/upload"
 	"test/service/websocketGin"
 	"test/service/websocketGo"
 
@@ -47,6 +48,7 @@ func regHandles() map[string]func() {
 		"grpcWSClient":   grpcWSClient.Main,
 		"grpcWeb":        grpcWeb.Main,
 		"grpcVue":        grpcVue.Main,
+		"upload":         upload.Main,
 		"raccoon":        raccoon.Main,
 		"dmidecode":      dmidecode.Main,
 	}
