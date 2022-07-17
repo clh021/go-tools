@@ -3,10 +3,19 @@ package uploadadvanced
 import (
 	"fmt"
 	"io/ioutil"
+	"net/http"
 	"os"
 	"strings"
 
 	"github.com/gin-gonic/gin"
+)
+
+const (
+	ContentTypeBinary = "application/octet-stream"
+	ContentTypeForm   = "application/x-www-form-urlencoded"
+	ContentTypeJSON   = "application/json"
+	ContentTypeHTML   = "text/html; charset=utf-8"
+	ContentTypeText   = "text/plain; charset=utf-8"
 )
 
 func Main() {
@@ -150,7 +159,109 @@ func Main() {
 	})
 
 	router.GET("/", func(c *gin.Context) {
-		// c.HTML(http.StatusOK, "<html><h1>haha</h1></html>")
+		html := `<script src="https://cdn.bootcdn.net/ajax/libs/spark-md5/3.0.0/spark-md5.min.js"></script>
+		TODO: 自动创建上传目录文件夹，自动根据当前访问域名适应提交域名，以及上传成功后JSON响应中的文件访问地址
+		<input type="file"><script>
+        const sliceSingleSize = 1024 * 1024 * 2;
+        document.querySelector('input').onchange = function(e) {
+            const file = this.files[0]
+            const sliceBuffer = []
+            let sliceSize = file.size
+            while(sliceSize > sliceSingleSize) {
+                const blobPart = file.slice(sliceBuffer.length * sliceSingleSize, (sliceBuffer.length + 1) * sliceSingleSize)
+                sliceBuffer.push(
+                    blobPart
+                )
+                sliceSize -= sliceSingleSize
+            }
+
+            if(sliceSize > 0) {
+                sliceBuffer.push(
+                    file.slice(sliceBuffer.length * sliceSingleSize, file.size)
+                )
+            }
+            
+            const fileReader = new FileReader()
+            fileReader.onload = function(res){
+                const result = fileReader.result
+                const fileHash = SparkMD5.hashBinary(result)
+
+                checkFileChunkState(fileHash)
+                .then(res => {
+                    let { chunkList, state } = res
+                    if(state === 1) {
+                        alert("已经上传完成")
+                        return 
+                    }
+
+                    chunkList = chunkList.map(e => parseInt(e))
+
+                    const chunkRequests = []
+                    sliceBuffer.forEach((buffer, i) => {
+                        if(!chunkList.includes(i)) {
+                            const blob = new File([buffer], i)
+                            chunkRequests.push(
+                                uploadFileChunk(fileHash, blob)
+                            )
+                        }
+                    })
+                    return Promise.all(chunkRequests)
+                })
+                .then(res => {
+                    return new Promise(resolve => {
+                        res.forEach(e => {
+                            e.json().then(({chunkList}) => {
+                                if(chunkList.length === sliceBuffer.length) {
+                                    megerChunkFile(fileHash, file.name).then(res => {
+                                        resolve(res)
+                                    })
+                                }
+                            })
+                        })
+                    })
+                }).then(res => {
+                    console.log(res)
+                })
+            }
+            fileReader.onerror = function(err) {
+                console.log("报错了", err.target.error)
+            }
+            fileReader.readAsBinaryString(this.files[0])
+
+        }
+
+        function uploadFileChunk(hash, file) {
+            let formData = new FormData
+            formData.append('file', file)
+            formData.append('hash', hash)
+            return fetch("http://127.0.0.1:9999/uploadChunk", {
+                method: "POST",
+                body: formData
+            })
+        }
+
+        function checkFileChunkState(hash) {
+            return new Promise(resolve => {
+                fetch("http://127.0.0.1:9999/checkChunk?hash=" + hash)
+                .then(r => r.json())
+                .then(response => {
+                    resolve(response)
+                })
+            })
+        }
+
+        function megerChunkFile(hash, fileName) {
+            return new Promise(resolve => {
+                fetch('http://127.0.0.1:9999/megerChunk?hash=${hash}&fileName=${fileName}')
+                .then(r => r.json())
+                .then(r => {
+                    resolve(r)
+                })
+            })
+        }
+
+    </script>`
+		c.Data(http.StatusOK, ContentTypeHTML, []byte(html))
 	})
 
 	router.Run("127.0.0.1:9999")
