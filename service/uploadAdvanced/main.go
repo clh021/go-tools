@@ -161,6 +161,7 @@ func Main() {
 	router.GET("/", func(c *gin.Context) {
 		html := `<script src="https://cdn.bootcdn.net/ajax/libs/spark-md5/3.0.0/spark-md5.min.js"></script>
 		TODO: 自动创建上传目录文件夹，自动根据当前访问域名适应提交域名，以及上传成功后JSON响应中的文件访问地址
+		TODO: 以扩展so保存记录到 sqlite 中或者其它可方便查询的 NOSql中
 		<input type="file"><script>
         const sliceSingleSize = 1024 * 1024 * 2;
         document.querySelector('input').onchange = function(e) {
