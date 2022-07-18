@@ -20,6 +20,7 @@ func newHandler() http.Handler {
 
 func Main() {
 	httpPort := 8081
+	log.Printf("Web/Api Server listen on :%d\n", httpPort)
 	mux := http.NewServeMux()
 	mux.Handle("/", newHandler())
 	http.ListenAndServe(fmt.Sprintf(":%d", httpPort), mux)
