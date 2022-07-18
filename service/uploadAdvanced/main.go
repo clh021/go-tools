@@ -1,4 +1,4 @@
-package uploadadvanced
+package uploadAdvanced
 
 import (
 	"fmt"
