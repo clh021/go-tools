@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"test/service/bindataWeb"
 	"test/service/caddyModule"
 	"test/service/dmidecode"
 	"test/service/fileModule"
@@ -34,6 +35,7 @@ var build = "not set"
 
 func regHandles() map[string]func() {
 	return map[string]func(){
+		"bindataWeb":     bindataWeb.Main,
 		"ginExample":     ginExample.Main,
 		"caddyModule":    caddyModule.Main,
 		"fileModule":     fileModule.Main,
