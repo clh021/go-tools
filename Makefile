@@ -47,7 +47,7 @@ runn:
 dev: p1="air"
 dev: p2=["sh", "-c", "APPINTO=${APPINTO} ./bin/app"]
 dev: .air bin
-	@echo 'import subprocess; [p.wait() for p in subprocess.Popen(${p1})]' | python2
+	air
 
 .PHONY: bin
 bin:
