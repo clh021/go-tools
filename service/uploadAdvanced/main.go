@@ -19,6 +19,7 @@ const (
 )
 
 func Main() {
+	port := 8080
 	router := gin.Default()
 
 	router.Use(Cors)
@@ -57,7 +58,7 @@ func Main() {
 			})
 		}
 		if len(chunkList) > 0 {
-			fmt.Printf("http://127.0.0.1:9999/uploadFile/%s/%s\n", hash, chunkList[len(chunkList)-1])
+			fmt.Printf("http://%s/uploadFile/%s/%s\n", c.Request.Host, hash, chunkList[len(chunkList)-1])
 		}
 	})
 
@@ -99,7 +100,7 @@ func Main() {
 
 			c.JSON(200, gin.H{
 				"chunkList": chunkList,
-				"fileUrl":   fmt.Sprintf("http://127.0.0.1:9999/uploadFile/%s/%s", fileHash, file.Filename),
+				"fileUrl":   fmt.Sprintf("http://%s/uploadFile/%s/%s", c.Request.Host, fileHash, file.Filename),
 			})
 		}
 	})
@@ -125,10 +126,9 @@ func Main() {
 			fmt.Println("获取hash路径文件错误", err)
 		}
 		fmt.Println("文件是否存在", isExistFile)
-		fmt.Println("c.Request.Host", c.Request.Host)
 		if isExistFile {
 			c.JSON(200, gin.H{
-				"fileUrl": fmt.Sprintf("http://127.0.0.1:9999/uploadFile/%s/%s", hash, fileName),
+				"fileUrl": fmt.Sprintf("http://%s/uploadFile/%s/%s", c.Request.Host, hash, fileName),
 			})
 			return
 		}
@@ -158,12 +158,13 @@ func Main() {
 		}
 
 		c.JSON(200, gin.H{
-			"fileUrl": fmt.Sprintf("http://127.0.0.1:9999/uploadFile/%s/%s", hash, fileName),
+			"fileUrl": fmt.Sprintf("http://%s/uploadFile/%s/%s", c.Request.Host, hash, fileName),
 		})
 
 	})
 
 	router.GET("/", func(c *gin.Context) {
+		fmt.Println("c.Request.Host", c.Request.Host, c.Request.RequestURI, c.Request.RemoteAddr, c.Request.URL)
 		html := `<script src="https://cdn.bootcdn.net/ajax/libs/spark-md5/3.0.0/spark-md5.min.js"></script>
     	TODO: 自动根据当前访问域名适应提交域名，以及上传成功后JSON响应中的文件访问地址
 <br>	TODO: 以扩展so保存记录到 sqlite 中或者其它可方便查询的 NOSql中
@@ -242,7 +243,7 @@ func Main() {
             let formData = new FormData
             formData.append('file', file)
             formData.append('hash', hash)
-            return fetch("http://127.0.0.1:9999/uploadChunk", {
+            return fetch("http://` + c.Request.Host + `/uploadChunk", {
                 method: "POST",
                 body: formData
             })
@@ -250,7 +251,7 @@ func Main() {
 
         function checkFileChunkState(hash) {
             return new Promise(resolve => {
-                fetch("http://127.0.0.1:9999/checkChunk?hash=" + hash)
+                fetch("http://` + c.Request.Host + `/checkChunk?hash=" + hash)
                 .then(r => r.json())
                 .then(response => {
                     resolve(response)
@@ -260,7 +261,7 @@ func Main() {
 
         function megerChunkFile(hash, fileName) {
             return new Promise(resolve => {
-                fetch('http://127.0.0.1:9999/megerChunk?hash=' + hash + '&fileName=' + fileName)
+                fetch('http://` + c.Request.Host + `/megerChunk?hash=' + hash + '&fileName=' + fileName)
                 .then(r => r.json())
                 .then(r => {
                     resolve(r)
@@ -273,7 +274,7 @@ func Main() {
 	})
 
 	router.StaticFS("/uploadFile", http.Dir("uploadFile"))
-	err := router.Run(":9999")
+	err := router.Run(fmt.Sprintf(":%d", port))
 	if err != nil {
 		fmt.Println("router error: ", err)
 		os.Exit(1)
