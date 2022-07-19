@@ -12,10 +12,6 @@ init: .git/hooks/pre-push
 install-depend:
 	go get -u github.com/cosmtrek/air
 
-.PHONY: .air
-.air:
-	touch .air
-
 .PHONY: build-bindata
 # rm -rf web/dist/js/*.map # 仅在最终发布包时用于优化软件包大小
 build-bindata:
@@ -33,22 +29,12 @@ build:
 	go generate
 	CGO_ENABLED=0 GOARCH=amd64 GOOS=linux go build -ldflags "-X main.build=${buildStr}" -o bin/app
 
-
 APPINTO=uploadAdvanced
 
 .PHONY: runn
-runn: p1="./bin/child.amd64"
-runn: p2="./bin/main"
 runn:
-	APPINTO=${APPINTO} ./bin/app
-# @echo 'import subprocess; [p.wait() for p in subprocess.Popen(${p1}),subprocess.Popen(${p2})]' | python2
+	APPINTO=${APPINTO} bin/app
 
 .PHONY: dev
-dev: p1="air"
-dev: p2=["sh", "-c", "APPINTO=${APPINTO} ./bin/app"]
-dev: .air bin
-	air
-
-.PHONY: bin
-bin:
-	mkdir -p bin
+dev:
+	air -d -c .air.toml
