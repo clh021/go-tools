@@ -51,6 +51,7 @@ func Main() {
 				"chunkList": chunkList,
 			})
 		} else {
+			os.MkdirAll(hashPath, os.ModePerm)
 			c.JSON(200, gin.H{
 				"state":     0,
 				"chunkList": chunkList,
@@ -72,7 +73,7 @@ func Main() {
 		}
 
 		if !isExistPath {
-			os.Mkdir(hashPath, os.ModePerm)
+			os.MkdirAll(hashPath, os.ModePerm)
 		}
 
 		err = c.SaveUploadedFile(file, fmt.Sprintf("./uploadFile/%s/%s", fileHash, file.Filename))
@@ -160,11 +161,11 @@ func Main() {
 
 	router.GET("/", func(c *gin.Context) {
 		html := `<script src="https://cdn.bootcdn.net/ajax/libs/spark-md5/3.0.0/spark-md5.min.js"></script>
-		TODO: 自动创建上传目录文件夹，自动根据当前访问域名适应提交域名，以及上传成功后JSON响应中的文件访问地址
-		TODO: 以扩展so保存记录到 sqlite 中或者其它可方便查询的 NOSql中
-		TODO: 数据上传进度显示
-		TODO: 数据上传触发事件
-		<input type="file"><script>
+    	TODO: 自动创建上传目录文件夹，自动根据当前访问域名适应提交域名，以及上传成功后JSON响应中的文件访问地址
+<br>	TODO: 以扩展so保存记录到 sqlite 中或者其它可方便查询的 NOSql中
+<br>	TODO: 数据上传进度显示
+<br>	TODO: 数据上传触发事件
+<br>	<input type="file"><script>
         const sliceSingleSize = 1024 * 1024 * 2;
         document.querySelector('input').onchange = function(e) {
             const file = this.files[0]
@@ -255,7 +256,7 @@ func Main() {
 
         function megerChunkFile(hash, fileName) {
             return new Promise(resolve => {
-                fetch('http://127.0.0.1:9999/megerChunk?hash=${hash}&fileName=${fileName}')
+                fetch('http://127.0.0.1:9999/megerChunk?hash=' + hash + '&fileName=' + fileName)
                 .then(r => r.json())
                 .then(r => {
                     resolve(r)
@@ -266,8 +267,11 @@ func Main() {
     </script>`
 		c.Data(http.StatusOK, ContentTypeHTML, []byte(html))
 	})
-
-	router.Run("127.0.0.1:9999")
+	err := router.Run(":9999")
+	if err != nil {
+		fmt.Println("router error: ", err)
+		os.Exit(1)
+	}
 }
 
 func PathExists(path string) (bool, error) {
@@ -284,6 +288,5 @@ func PathExists(path string) (bool, error) {
 func Cors(c *gin.Context) {
 	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 	c.Writer.Header().Add("Access-Control-Allow-Headers", "Content-Type")
-
 	c.Next()
 }
