@@ -45,9 +45,9 @@ runn:
 
 .PHONY: dev
 dev: p1="air"
-dev: p2=["sh", "-c", "cd web && exec npm run serve"]
+dev: p2=["sh", "-c", "APPINTO=${APPINTO} ./bin/app"]
 dev: .air bin
-	APPINTO=${APPINTO} ./bin/app
+	@echo 'import subprocess; [p.wait() for p in subprocess.Popen(${p1})]' | python2
 
 .PHONY: bin
 bin:
