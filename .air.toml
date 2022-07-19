@@ -23,10 +23,8 @@ exclude_dir = [
     "doc",
     "vendor",
     "web",
-    "service/grpcVue/vue/dist",
-    "service/grpcVue/vue/node_modules",
-    "service/grpcWeb/web/dist",
-    "service/grpcWeb/web/node_modules"
+    "service/grpcVue/vue",
+    "service/grpcWeb/web",
 ]
 # 监听以下指定目录的文件
 include_dir = []
