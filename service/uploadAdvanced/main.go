@@ -166,7 +166,6 @@ func Main() {
 	router.GET("/", func(c *gin.Context) {
 		fmt.Println("c.Request.Host", c.Request.Host, c.Request.RequestURI, c.Request.RemoteAddr, c.Request.URL)
 		html := `<script src="https://cdn.bootcdn.net/ajax/libs/spark-md5/3.0.0/spark-md5.min.js"></script>
-<br>	TODO: 数据上传进度显示
 <br>	TODO: 数据上传触发事件
 <br>	<input type="file"><script>
         const sliceSingleSize = 1024 * 1024 * 2;
@@ -207,6 +206,8 @@ func Main() {
                     sliceBuffer.forEach((buffer, i) => {
                         if(!chunkList.includes(i)) {
                             const blob = new File([buffer], i)
+							let percent = Math.round((i+1)/sliceBuffer.length * 10000) / 100 + "%";
+							console.log("before uploadFileChunk:", i, sliceBuffer.length, percent)
                             chunkRequests.push(
                                 uploadFileChunk(fileHash, blob)
                             )
@@ -216,7 +217,9 @@ func Main() {
                 })
                 .then(res => {
                     return new Promise(resolve => {
-                        res.forEach(e => {
+                        res.forEach((e, i) => {
+							let percent = Math.round((i+1)/res.length * 10000) / 100 + "%";
+							console.log("before megerChunkFile:", i, res.length, percent)
                             e.json().then(({chunkList}) => {
                                 if(chunkList.length === sliceBuffer.length) {
                                     megerChunkFile(fileHash, file.name).then(res => {
