@@ -167,10 +167,13 @@ func Main() {
 		fmt.Println("c.Request.Host", c.Request.Host, c.Request.RequestURI, c.Request.RemoteAddr, c.Request.URL)
 		html := `<script src="https://cdn.bootcdn.net/ajax/libs/spark-md5/3.0.0/spark-md5.min.js"></script>
 <br>	TODO: 数据上传触发事件
-<br>	<input type="file"><script>
+<br>	<input type="file" id="file"><button onclick="upload()">upload</button><script>
         const sliceSingleSize = 1024 * 1024 * 2;
         document.querySelector('input').onchange = function(e) {
-            const file = this.files[0]
+			console.log('trigger upload not on this change event. use button.')
+		}
+		function upload() {
+			const file = document.getElementById("file").files[0];
             const sliceBuffer = []
             let sliceSize = file.size
             while(sliceSize > sliceSingleSize) {
@@ -236,7 +239,7 @@ func Main() {
             fileReader.onerror = function(err) {
                 console.log("报错了", err.target.error)
             }
-            fileReader.readAsBinaryString(this.files[0])
+            fileReader.readAsBinaryString(file)
 
         }
 
