@@ -166,8 +166,6 @@ func Main() {
 	router.GET("/", func(c *gin.Context) {
 		fmt.Println("c.Request.Host", c.Request.Host, c.Request.RequestURI, c.Request.RemoteAddr, c.Request.URL)
 		html := `<script src="https://cdn.bootcdn.net/ajax/libs/spark-md5/3.0.0/spark-md5.min.js"></script>
-    	TODO: 自动根据当前访问域名适应提交域名，以及上传成功后JSON响应中的文件访问地址
-<br>	TODO: 以扩展so保存记录到 sqlite 中或者其它可方便查询的 NOSql中
 <br>	TODO: 数据上传进度显示
 <br>	TODO: 数据上传触发事件
 <br>	<input type="file"><script>
