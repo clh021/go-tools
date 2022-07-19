@@ -30,7 +30,6 @@ func Main() {
 		if err != nil {
 			fmt.Println("获取hash路径错误", err)
 		}
-
 		if isExistPath {
 			files, err := ioutil.ReadDir(hashPath)
 			state := 0
@@ -56,6 +55,9 @@ func Main() {
 				"state":     0,
 				"chunkList": chunkList,
 			})
+		}
+		if len(chunkList) > 0 {
+			fmt.Printf("http://127.0.0.1:9999/uploadFile/%s/%s\n", hash, chunkList[len(chunkList)-1])
 		}
 	})
 
@@ -97,6 +99,7 @@ func Main() {
 
 			c.JSON(200, gin.H{
 				"chunkList": chunkList,
+				"fileUrl":   fmt.Sprintf("http://127.0.0.1:9999/uploadFile/%s/%s", fileHash, file.Filename),
 			})
 		}
 	})
@@ -122,6 +125,7 @@ func Main() {
 			fmt.Println("获取hash路径文件错误", err)
 		}
 		fmt.Println("文件是否存在", isExistFile)
+		fmt.Println("c.Request.Host", c.Request.Host)
 		if isExistFile {
 			c.JSON(200, gin.H{
 				"fileUrl": fmt.Sprintf("http://127.0.0.1:9999/uploadFile/%s/%s", hash, fileName),
@@ -161,7 +165,7 @@ func Main() {
 
 	router.GET("/", func(c *gin.Context) {
 		html := `<script src="https://cdn.bootcdn.net/ajax/libs/spark-md5/3.0.0/spark-md5.min.js"></script>
-    	TODO: 自动创建上传目录文件夹，自动根据当前访问域名适应提交域名，以及上传成功后JSON响应中的文件访问地址
+    	TODO: 自动根据当前访问域名适应提交域名，以及上传成功后JSON响应中的文件访问地址
 <br>	TODO: 以扩展so保存记录到 sqlite 中或者其它可方便查询的 NOSql中
 <br>	TODO: 数据上传进度显示
 <br>	TODO: 数据上传触发事件
@@ -267,6 +271,8 @@ func Main() {
     </script>`
 		c.Data(http.StatusOK, ContentTypeHTML, []byte(html))
 	})
+
+	router.StaticFS("/uploadFile", http.Dir("uploadFile"))
 	err := router.Run(":9999")
 	if err != nil {
 		fmt.Println("router error: ", err)
