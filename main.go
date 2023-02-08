@@ -6,6 +6,7 @@ import (
 	"os"
 	"test/service/bindataWeb"
 	"test/service/caddyModule"
+	"test/service/chan1"
 	"test/service/dmidecode"
 	"test/service/fileModule"
 	"test/service/ginExample"
@@ -55,6 +56,7 @@ func regHandles() map[string]func() {
 		"uploadAdvanced": uploadAdvanced.Main,
 		"raccoon":        raccoon.Main,
 		"dmidecode":      dmidecode.Main,
+		"chan1":          chan1.Main,
 	}
 }
 
