@@ -7,6 +7,10 @@ import (
 	"test/service/bindataWeb"
 	"test/service/caddyModule"
 	"test/service/chan1"
+	"test/service/chan2"
+	"test/service/chan3"
+	"test/service/chan4"
+	"test/service/chan5"
 	"test/service/dmidecode"
 	"test/service/fileModule"
 	"test/service/ginExample"
@@ -57,6 +61,10 @@ func regHandles() map[string]func() {
 		"raccoon":        raccoon.Main,
 		"dmidecode":      dmidecode.Main,
 		"chan1":          chan1.Main,
+		"chan2":          chan2.Main,
+		"chan3":          chan3.Main,
+		"chan4":          chan4.Main,
+		"chan5":          chan5.Main,
 	}
 }
 

@@ -29,7 +29,7 @@ build:
 	go generate
 	CGO_ENABLED=0 GOARCH=amd64 GOOS=linux go build -ldflags "-X main.build=${buildStr}" -o bin/app
 
-APPINTO=chan1
+APPINTO=chan2
 
 .PHONY: runn
 runn:
