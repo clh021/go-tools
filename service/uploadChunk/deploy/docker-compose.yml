@@ -1,0 +1,81 @@
+version: '3'
+
+services:
+  drone-server:
+    image: drone/drone:2.18.0
+    ports:
+      - 8080:80
+      - 8843:443
+      - 9000
+    volumes:
+      - ./data/drone:/data # SQLite 数据库存储地址
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: always
+    environment:
+      # DRONE_OPEN: true
+      # DRONE_DEBUG: true
+      # DRONE_LOGS_TRACE: true # 日志追踪
+      DRONE_SERVER_HOST: pc.lan:8080
+      DRONE_SERVER_PROTO: http
+      TZ: Asia/Taipei
+      DRONE_GOGS: true
+      DRONE_GOGS_SKIP_VERIFY: false
+      DRONE_GOGS_SERVER: http://gogs:3000
+      # DRONE_PROVIDER: gogs
+      # DRONE_DATABASE_DATASOURCE: /var/lib/drone/drone.sqlite
+      # DRONE_DATABASE_DRIVER: sqlite3
+      DRONE_RPC_SECRET: ${DRONE_RPC_SECRET} # 可由 openssl rand -hex 16 命令生成
+      # DRONE_SECRET: ${DRONE_RPC_SECRET}
+      DRONE_USER_CREATE: username:drone_admin,admin:true
+      # - DRONE_BITBUCKET_CLIENT_ID={{DRONE_BITBUCKET_CLIENT_ID}} # 刚才获取的 Key
+      # - DRONE_BITBUCKET_CLIENT_SECRET={{DRONE_BITBUCKET_CLIENT_SECRET}} # 刚才获取的 Secret
+      # - DRONE_SERVER_HOST=drone.fix.moe
+      # - DRONE_SERVER_PROTO=https
+      # DRONE_GIT_ALWAYS_AUTH: false
+  gogs:
+    image: gogs/gogs:latest
+    ports:
+      - "10022:22"
+      - "3000:3000"
+    volumes:
+      - ./data/gogs:/data
+  # mysql:
+  #   image: mysql:5.7.16
+  #   volumes:
+  #     - ./data/mysql:/var/lib/mysql
+  #     # - /var/run/docker.sock:/var/run/docker.sock
+  #   ports:
+  #     - 3308:3306
+  #   command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: pass
+  #     MYSQL_DATABASE: gogs
+  #     MYSQL_USER: gogs
+  #     MYSQL_PASSWORD: pass
+  #     TZ: Asia/Shanghai
+  drone-agent:
+    image: drone/agent:1.6.2
+    depends_on:
+      - drone-server
+    environment:
+      - DRONE_RPC_SERVER=http://drone-server
+      - DRONE_RPC_SECRET=${DRONE_RPC_SECRET}
+      - DRONE_DEBUG=true
+      - DOCKER_HOST=tcp://docker-bind:2375
+      - DRONE_SERVER=drone-server:9000
+      - DRONE_SECRET=${DRONE_RPC_SECRET}
+      - DRONE_MAX_PROCS=5
+  docker-bind:
+     image: docker:dind
+     privileged: true
+  minio:
+    image: minio/minio:RELEASE.2023-08-04T17-40-21Z.hotfix.bfb2c8508
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - ./data/minio:/data
+    environment:
+      - MINIO_ROOT_USER=root
+      - MINIO_ROOT_PASSWORD=${DRONE_RPC_SECRET}
+    command: server --console-address ":9001" /data
