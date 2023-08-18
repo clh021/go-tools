@@ -133,6 +133,7 @@ export const uploadByPieces = ({
     makeFileForm.append("count", chunkCount);
     makeFileForm.append("file_name", currentFile.name);
     makeFileForm.append("size", currentFile.file.size);
+    makeFileForm.append("type", currentFile.file.type);
     return axios({
       // 合并文件
       method: "post",

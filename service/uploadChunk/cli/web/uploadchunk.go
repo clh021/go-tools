@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"path/filepath"
 	"sort"
 	"strconv"
 	"strings"
@@ -22,12 +21,12 @@ const (
 func (w *webService) UploadChunk(c *gin.Context) {
 	chunkName := fmt.Sprintf("%s.%s.%s.%s.part", c.PostForm("md5"), c.PostForm("chunk_index"), c.PostForm("chunks"), c.PostForm("chunk_md5"))
 
-	if w.FM.IsFileExist(filepath.Join(w.conf.UploadPath, c.PostForm("md5"))) {
+	if w.FM.IsFileExist(c.PostForm("md5")) {
 		c.JSON(200, gin.H{"code": FILE_EXIST})
 		return
 	}
 
-	if w.FM.IsFileExist(filepath.Join(w.conf.UploadPath, chunkName)) {
+	if w.FM.IsFileExist(chunkName) {
 		c.JSON(200, gin.H{"code": CHUNK_FINISH})
 		return
 	}
@@ -61,12 +60,15 @@ func (w *webService) UploadChunk(c *gin.Context) {
 
 	c.JSON(200, gin.H{"code": CHUNK_FINISH})
 }
+
 type uploadParams struct {
 }
 
 func (w *webService) UploadChunkDone(c *gin.Context) {
 	fileMD5 := c.PostForm("md5")
 	fileName := c.PostForm("file_name")
+	fileType := c.PostForm("type")
+	fileSize := c.PostForm("size")
 
 	var req uploadParams
 
@@ -144,16 +146,16 @@ func (w *webService) UploadChunkDone(c *gin.Context) {
 
 	}
 
-	// fr, err := model.NewFileRef(up.DB, fileName, fileMD5, "", model.ResourceClass(req.RoleClass))
-	// if err != nil {
-	// 	RetError(c, err)
-	// 	return
-	// }
-	// session.RecordFSUpload(c, fileName)
+	w.db.AddFiles(fileName, fileMD5)
+	// log.Println("minIO:", filepath.Join(w.conf.UploadPath,fileMD5), fileMD5, fileType)
+	// w.minio.PrintEndpointURL()
+	// w.minio.Put(filepath.Join(w.conf.UploadPath,fileMD5), fileMD5, fileType)
 	c.JSON(http.StatusOK, gin.H{
-		"data": "",
+		"data":     "",
 		"fileName": fileName,
-		// "url":  fr.ID,
-		"err":  "",
+		"fileMD5": fileMD5,
+		"fileType": fileType,
+		"fileSize": fileSize,
+		"err":      "",
 	})
 }

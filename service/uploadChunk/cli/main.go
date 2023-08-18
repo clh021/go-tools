@@ -2,8 +2,10 @@ package main
 
 import (
 	"fmt"
+	"log"
 
 	"gitee.com/linakesi/source-analysis-tools-ui/cli/config"
+	"gitee.com/linakesi/source-analysis-tools-ui/cli/db"
 	"gitee.com/linakesi/source-analysis-tools-ui/cli/drone"
 	"gitee.com/linakesi/source-analysis-tools-ui/cli/minio"
 	"gitee.com/linakesi/source-analysis-tools-ui/cli/web"
@@ -17,7 +19,16 @@ func main() {
 	fmt.Printf("Build: %s\n", build)
 	c := config.Loading()
 	d := drone.New(c.Drone)
+	s := db.New("gorm.db")
+	// sqlDB, err := s.Db.DB()
+	// if err != nil {
+	// 	log.Fatalln(err)
+	// }
+	// defer sqlDB.Close()
 	m := minio.New(c.Minio)
-	m.InitClient()
-	web.New(c.Web, d, m)
+	// m.InitClient()
+	log.Println("-------------------------")
+	// m.PrintEndpointURL()
+	log.Println("-------------------------")
+	web.New(c.Web, d, m, s)
 }

@@ -3,26 +3,29 @@
     <!-- 上传组件 -->
     <el-upload action drag :show-file-list="false" :http-request="handleUploadRequest">
       <i class="el-icon-upload"></i>
-      <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+      <slot></slot> <!-- 向内传递插槽内容 -->
       <!-- <div class="el-upload__tip" slot="tip">大小不超过 200M </div> -->
     </el-upload>
-
     <!-- 进度显示 -->
-    <el-progress class="progress-bar" :text-inside="true" :stroke-width="24" :percentage="parseInt(percent , 10)" />
+    <el-progress v-show="percent" class="progress-bar" :text-inside="true" :stroke-width="24"
+      :percentage="parseInt(percent, 10)" />
   </div>
 </template>
 
 
 <script>
-import { uploadByPieces } from "./chunkUpload.js";
+import { uploadByPieces } from "./UploadChunk.js";
 
 export default {
+  // props: {
+  //   fileString: {
+  //     type: String,
+  //     default: "文件"
+  //   },
+  // },
   data () {
     return {
       percent: 0,
-      videoUrl: '',
-      uploading: true,
-      percentCount: 0
     }
   },
   methods: {
@@ -45,6 +48,7 @@ export default {
           },
           success: (data) => {
             this.percent = 100;
+            this.$emit("uploadDone", data.data);
             resolve(data);
           },
           error: (e) => {
@@ -53,7 +57,7 @@ export default {
           },
         });
       });
-    },
+    }
   }
 }
 </script>
