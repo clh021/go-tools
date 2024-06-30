@@ -15,6 +15,7 @@ import (
 	"test/service/fileModule"
 	"test/service/ginExample"
 	"test/service/goAdmin"
+	"test/service/gogf"
 	"test/service/grpcGo/grpcGoClient"
 	"test/service/grpcGo/grpcGoServer"
 	"test/service/grpcGo2"
@@ -48,6 +49,7 @@ func regHandles() map[string]func() {
 		"goAdmin":        goAdmin.Main,
 		"websocketGin":   websocketGin.Main,
 		"websocketGo":    websocketGo.Main,
+		"gogf":           gogf.Main,
 		"grpcGoClient":   grpcGoClient.Main,
 		"grpcGoServer":   grpcGoServer.Main,
 		"grpcGo2":        grpcGo2.Main,
